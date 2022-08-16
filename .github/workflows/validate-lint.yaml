@@ -40,3 +40,4 @@ jobs:
 
       - name: Test Chart
         run: ct install
+        if: steps.list-changed.outputs.changed == 'true'
