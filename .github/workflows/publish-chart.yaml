@@ -1,9 +1,15 @@
-name: Publish & Release Charts
+name: Package & Release Charts
 
-on: pull_request
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+
 
 jobs:
-  release:
+  package-release:
     permissions:
       contents: write
     runs-on: ubuntu-latest
