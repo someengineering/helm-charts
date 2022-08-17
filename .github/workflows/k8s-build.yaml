@@ -1,6 +1,7 @@
 name: Test k8s helm chart
 
 on:
+  pull_request:
   workflow_run:
     workflows: ["Package & Release Charts"]
     branches: [main]
