@@ -24,7 +24,7 @@ kubectl --namespace resoto rollout status deploy/arango-arango-operator --timeou
 kubectl --namespace resoto apply -f - <<EOF
 apiVersion: "database.arangodb.com/v1alpha"
 kind: "ArangoDeployment"
-metadata:Gi
+metadata:
   name: "single-server"
 spec:
   mode: Single
