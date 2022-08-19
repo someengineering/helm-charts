@@ -6,6 +6,7 @@ set -o pipefail
 
 IMAGE_TAG="${IMAGE_TAG:-edge}"
 NO_START_KIND="${NO_START_KIND:-}"
+CI_ENABLED=${CI_ENABLED:-}
 
 if [ -z "${NO_START_KIND}" ]; then
   kind create cluster
@@ -40,13 +41,22 @@ ARANGO_DB_POD=$(kubectl --namespace resoto get pod -larango_deployment=single-se
 # wait until the db is ready to accept clients.
 timeout 1m $SHELL -c "until kubectl --namespace resoto exec $ARANGO_DB_POD -- /lifecycle/tools/arangodb_operator lifecycle probe --endpoint=/_api/version --auth; do sleep 1; done"
 
-# install cloud keeper with the example collector
+if [ -z "${CI_ENABLED}" ]; then
 helm repo add someengineering https://someengineering.github.io/helm-charts
-helm install --namespace resoto resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
-resotocore:
-  graphdb:
-    server: http://single-server:8529
+  helm install --namespace resoto resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
+  resotocore:
+    graphdb:
+      server: http://single-server:8529
 EOF
+else
+  DIR="$(dirname "$(realpath "$0")")"
+  helm upgrade -i --namespace resoto resoto "$DIR/../charts/resoto" --set image.tag=$IMAGE_TAG -f - <<EOF
+  resotocore:
+    graphdb:
+      server: http://single-server:8529
+EOF
+fi
+
 # wait for it to be ready
 kubectl --namespace resoto rollout status deploy/resoto-resotocore --timeout=300s
 kubectl --namespace resoto rollout status deploy/resoto-resotoworker --timeout=300s
