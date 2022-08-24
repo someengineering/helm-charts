@@ -11,7 +11,12 @@ maintainers:
   - name: aquamatthias
     email: "eng@some.engineering"
 
-  icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
-  home: https://resoto.com
-  sources:
-    - https://github.com/someengineering/resoto
+icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
+home: https://resoto.com
+sources:
+  - https://github.com/someengineering/resoto
+keywords:
+  - resoto
+  - cloud-native
+  - aws
+  - k8s
