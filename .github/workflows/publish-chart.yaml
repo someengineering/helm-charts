@@ -33,5 +33,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: charts
+          charts_repo_url: https://helm.resoto.com
         env:
           CR_TOKEN: "${{ secrets.SOME_CI_PAT }}"
