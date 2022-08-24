@@ -17,6 +17,9 @@ sources:
   - https://github.com/someengineering/resoto
 keywords:
   - resoto
-  - cloud-native
+  - cloud
+  - automation
   - aws
+  - gcp
+  - digitalocean
   - k8s
