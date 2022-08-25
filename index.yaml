@@ -3,6 +3,32 @@ entries:
   resoto:
   - apiVersion: v2
     appVersion: 2.3.0
+    created: "2022-08-25T16:05:17.914666919Z"
+    description: A Helm chart for Kubernetes
+    digest: 0944015c9d001562bed4e33a12bb1788dbb4114bb442dc3826b333bfe903b532
+    home: https://resoto.com
+    icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
+    keywords:
+    - resoto
+    - cloud
+    - automation
+    - aws
+    - gcp
+    - digitalocean
+    - k8s
+    maintainers:
+    - name: kushthedude
+    - email: eng@some.engineering
+      name: aquamatthias
+    name: resoto
+    sources:
+    - https://github.com/someengineering/resoto
+    type: application
+    urls:
+    - https://github.com/someengineering/helm-charts/releases/download/resoto-0.3.2/resoto-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 2.3.0
     created: "2022-08-17T10:38:49.247512671Z"
     description: A Helm chart for Kubernetes
     digest: 0e4e3886a63e2bdf02d6c8e43fa6e766bde5fd7a81fab1b885e5ef30d92ba2cf
@@ -11,4 +37,4 @@ entries:
     urls:
     - https://github.com/someengineering/helm-charts/releases/download/resoto-0.3.0/resoto-0.3.0.tgz
     version: 0.3.0
-generated: "2022-08-17T10:38:49.247517671Z"
+generated: "2022-08-25T16:05:17.914676419Z"
