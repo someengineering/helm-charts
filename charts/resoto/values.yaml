@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repositoryFolder: ghcr.io/someengineering
+  repositoryFolder: somecr.io/someengineering
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
