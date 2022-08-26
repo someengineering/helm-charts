@@ -20,7 +20,7 @@ jobs:
           go-version: '>=1.17.0'
       - run: |
           go version
-          GO111MODULE=on go get github.com/norwoodj/helm-docs/cmd/helm-docs
+          GO111MODULE=on go install github.com/norwoodj/helm-docs/cmd/helm-docs
 
       - name: generate & compare documentation
         run: |
