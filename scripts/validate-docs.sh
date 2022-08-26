@@ -18,9 +18,9 @@ printf "Printing old readme..... \n\n\n\n\n"
 echo "$OLD_FILE"
 
 if [ "$NEW_FILE" == "$OLD_FILE" ]; then
-    echo "Strings are equal."
+    echo "files have been updated or no change."
     exit 0
 else
-    echo "Strings are not equal."
+    echo "file needs to be updated, please run helm-docs"
     exit 1
 fi
