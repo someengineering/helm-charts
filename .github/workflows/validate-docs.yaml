@@ -24,4 +24,5 @@ jobs:
 
       - name: generate & compare documentation
         run: |
-          bash -x ./scripts/validate-docs.sh
+          chmod +x ./scripts/validate-docs.sh
+          ./scripts/validate-docs.sh
