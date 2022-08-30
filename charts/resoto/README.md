@@ -25,7 +25,7 @@ A Helm chart for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryFolder | string | `"somecr.io/someengineering"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"latest"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
