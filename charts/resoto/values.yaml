@@ -93,7 +93,9 @@ resotocore:
     username: resoto
     # -- The secret to get the password from
     passwordSecret:
+      # -- The secret name to get the password from
       name: arango-user
+      # -- The secret key to get the password from
       key: password
 
   # -- Use this section to override configuration values

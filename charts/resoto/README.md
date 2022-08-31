@@ -37,6 +37,8 @@ A Helm chart for Kubernetes
 | resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://single-server:8529","username":"resoto"}` | This defines the access to the graph database |
 | resotocore.graphdb.database | string | `"resoto"` | The name of the database to use |
 | resotocore.graphdb.passwordSecret | object | `{"key":"password","name":"arango-user"}` | The secret to get the password from |
+| resotocore.graphdb.passwordSecret.key | string | `"password"` | The secret key to get the password from |
+| resotocore.graphdb.passwordSecret.name | string | `"arango-user"` | The secret name to get the password from |
 | resotocore.graphdb.server | string | `"http://single-server:8529"` | The complete url of the graph database |
 | resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
 | resotocore.ingress.annotations | object | `{}` |  |
