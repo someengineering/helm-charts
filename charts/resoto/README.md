@@ -25,47 +25,47 @@ A Helm chart for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryFolder | string | `"somecr.io/someengineering"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
-| resotocore.extraArgs | list | `[]` |  |
-| resotocore.extraEnv | list | `[]` |  |
-| resotocore.graphdb.database | string | `"resoto"` |  |
-| resotocore.graphdb.passwordSecret.key | string | `"password"` |  |
-| resotocore.graphdb.passwordSecret.name | string | `"arango-user"` |  |
-| resotocore.graphdb.server | string | `"http://single-server:8529"` |  |
-| resotocore.graphdb.username | string | `"resoto"` |  |
+| resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
+| resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
+| resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://single-server:8529","username":"resoto"}` | This defines the access to the graph database |
+| resotocore.graphdb.database | string | `"resoto"` | The name of the database to use |
+| resotocore.graphdb.passwordSecret | object | `{"key":"password","name":"arango-user"}` | The secret to get the password from |
+| resotocore.graphdb.server | string | `"http://single-server:8529"` | The complete url of the graph database |
+| resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
 | resotocore.ingress.annotations | object | `{}` |  |
 | resotocore.ingress.className | string | `""` |  |
 | resotocore.ingress.enabled | bool | `false` |  |
-| resotocore.ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| resotocore.ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| resotocore.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | kubernetes.io/tls-acme: "true" |
 | resotocore.ingress.tls | list | `[]` |  |
-| resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` |  |
-| resotocore.overrides[1] | string | `"resotocore.api.ui_path=/usr/local/resoto/ui/"` |  |
+| resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"]` | Use this section to override configuration values |
+| resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
+| resotocore.overrides[1] | string | `"resotocore.api.ui_path=/usr/local/resoto/ui/"` | this is location of the UI in the docker container |
 | resotocore.service.port | int | `8900` |  |
 | resotocore.service.type | string | `"ClusterIP"` |  |
-| resotometrics.extraArgs | list | `[]` |  |
-| resotometrics.extraEnv | list | `[]` |  |
-| resotometrics.overrides | list | `[]` |  |
-| resotometrics.serviceMonitor.enabled | bool | `false` |  |
-| resotometrics.serviceMonitor.interval | string | `"30s"` |  |
-| resotometrics.serviceMonitor.scrapeTimeout | string | `"25s"` |  |
-| resotoworker.extraArgs | list | `[]` |  |
-| resotoworker.extraEnv | list | `[]` |  |
-| resotoworker.overrides | list | `[]` |  |
-| resotoworker.volumeMounts | list | `[]` |  |
-| resotoworker.volumes | list | `[]` |  |
+| resotometrics.extraArgs | list | `[]` | Use this section to define extra arguments |
+| resotometrics.extraEnv | list | `[]` | Use this section to pass extra environment variables |
+| resotometrics.overrides | list | `[]` | Use this section to override configuration values |
+| resotometrics.serviceMonitor | object | `{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}` | Prometheus serviceMonitor configuration |
+| resotometrics.serviceMonitor.enabled | bool | `false` | Whether a Prometheus serviceMonitor should be created |
+| resotometrics.serviceMonitor.interval | string | `"30s"` | Metrics scrape interval |
+| resotometrics.serviceMonitor.scrapeTimeout | string | `"25s"` | Metrics scrape timeout |
+| resotoworker.extraArgs | list | `[]` | Use this section to define extra arguments |
+| resotoworker.extraEnv | list | `[]` | Use this section to pass extra environment variables |
+| resotoworker.overrides | list | `[]` | Use this section to override configuration values |
+| resotoworker.volumeMounts | list | `[]` | Use this section to define volume mounts for the worker |
+| resotoworker.volumes | list | `[]` | Use this section to define volumes of the worker |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
