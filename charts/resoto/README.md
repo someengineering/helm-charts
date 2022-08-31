@@ -44,7 +44,9 @@ A Helm chart for Kubernetes
 | resotocore.ingress.annotations | object | `{}` |  |
 | resotocore.ingress.className | string | `""` |  |
 | resotocore.ingress.enabled | bool | `false` |  |
-| resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | kubernetes.io/tls-acme: "true" |
+| resotocore.ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| resotocore.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| resotocore.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | resotocore.ingress.tls | list | `[]` |  |
 | resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"]` | Use this section to override configuration values |
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
