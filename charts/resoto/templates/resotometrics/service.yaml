@@ -5,6 +5,13 @@ metadata:
   labels:
     resoto: metrics
     {{- include "resoto.labels" . | nindent 4 }}
+  {{- if not .Values.resotometrics.serviceMonitor.enabled }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/metrics'
+    prometheus.io/port: '9955'
+    prometheus.io/scheme: 'https'
+  {{- end }}
 spec:
   type: ClusterIP
   ports:
