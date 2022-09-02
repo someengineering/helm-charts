@@ -23,9 +23,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repositoryFolder | string | `"somecr.io/someengineering"` |  |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -41,6 +39,8 @@ A Helm chart for Kubernetes
 | resotocore.graphdb.passwordSecret.name | string | `"arango-user"` | The secret name to get the password from |
 | resotocore.graphdb.server | string | `"http://single-server:8529"` | The complete url of the graph database |
 | resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
+| resotocore.image.repository | string | `"somecr.io/someengineering/resotocore"` | Image repository |
+| resotocore.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | resotocore.ingress.annotations | object | `{}` |  |
 | resotocore.ingress.className | string | `""` |  |
 | resotocore.ingress.enabled | bool | `false` |  |
@@ -55,6 +55,9 @@ A Helm chart for Kubernetes
 | resotocore.service.type | string | `"ClusterIP"` |  |
 | resotometrics.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotometrics.extraEnv | list | `[]` | Use this section to pass extra environment variables |
+| resotometrics.image.repository | string | `"somecr.io/someengineering/resotometrics"` | Image repository |
+| resotometrics.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| resotometrics.imagePullPolicy | string | `"IfNotPresent"` |  |
 | resotometrics.overrides | list | `[]` | Use this section to override configuration values |
 | resotometrics.serviceMonitor | object | `{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}` | Prometheus serviceMonitor configuration |
 | resotometrics.serviceMonitor.enabled | bool | `false` | Whether a Prometheus serviceMonitor should be created |
@@ -62,6 +65,8 @@ A Helm chart for Kubernetes
 | resotometrics.serviceMonitor.scrapeTimeout | string | `"25s"` | Metrics scrape timeout |
 | resotoworker.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotoworker.extraEnv | list | `[]` | Use this section to pass extra environment variables |
+| resotoworker.image.repository | string | `"somecr.io/someengineering/resotoworker"` | Image repository |
+| resotoworker.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | resotoworker.overrides | list | `[]` | Use this section to override configuration values |
 | resotoworker.volumeMounts | list | `[]` | Use this section to define volume mounts for the worker |
 | resotoworker.volumes | list | `[]` | Use this section to define volumes of the worker |
