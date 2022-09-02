@@ -36,7 +36,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.resotometrics.image.repository }}:{{ .Values.resotometrics.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           args:
           - --resotocore-uri
           - https://{{ include "resoto.fullname" . }}-resotocore:8900

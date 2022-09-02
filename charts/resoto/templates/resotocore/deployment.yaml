@@ -37,7 +37,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.resotocore.image.repository }}:{{ .Values.resotocore.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           args:
           - --graphdb-server
           - {{ .Values.resotocore.graphdb.server | quote }}
