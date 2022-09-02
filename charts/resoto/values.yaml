@@ -4,15 +4,11 @@
 
 replicaCount: 1
 
-image:
-  repositoryFolder: somecr.io/someengineering
-  pullPolicy: IfNotPresent
-  # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+# -- The image pull policy
+imagePullPolicy: "IfNotPresent"
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -37,6 +33,11 @@ securityContext: {}
 #  runAsUser: 1000
 
 resotoworker:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotoworker
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   # -- Use this section to override configuration values
   overrides: []
   # -- Use this section to define extra arguments
@@ -50,6 +51,12 @@ resotoworker:
 
 
 resotometrics:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotometrics
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  imagePullPolicy: IfNotPresent
   # -- Use this section to override configuration values
   overrides: []
   # -- Use this section to define extra arguments
@@ -66,6 +73,11 @@ resotometrics:
     scrapeTimeout: 25s
 
 resotocore:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotocore
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   service:
     type: ClusterIP
     port: 8900
