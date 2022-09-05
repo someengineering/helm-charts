@@ -56,7 +56,6 @@ resotometrics:
     repository: somecr.io/someengineering/resotometrics
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
-  imagePullPolicy: IfNotPresent
   # -- Use this section to override configuration values
   overrides: []
   # -- Use this section to define extra arguments

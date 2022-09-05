@@ -57,7 +57,6 @@ A Helm chart for Kubernetes
 | resotometrics.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotometrics.image.repository | string | `"somecr.io/someengineering/resotometrics"` | Image repository |
 | resotometrics.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| resotometrics.imagePullPolicy | string | `"IfNotPresent"` |  |
 | resotometrics.overrides | list | `[]` | Use this section to override configuration values |
 | resotometrics.serviceMonitor | object | `{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}` | Prometheus serviceMonitor configuration |
 | resotometrics.serviceMonitor.enabled | bool | `false` | Whether a Prometheus serviceMonitor should be created |
