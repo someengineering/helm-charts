@@ -35,8 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repositoryFolder }}/resotoworker:{{ .Values.image.tag | default .Chart.AppVersion }}"
-
+          image: "{{ .Values.resotoworker.image.repository }}:{{ .Values.resotoworker.image.tag | default .Chart.AppVersion }}"
           args:
           - --resotocore-uri
           - https://{{ include "resoto.fullname" . }}-resotocore:8900
@@ -53,11 +52,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "resoto.fullname" . }}-psk
                   key: "psk"
-
           {{- if .Values.resotoworker.extraEnv }}
           {{- toYaml .Values.resotoworker.extraEnv | nindent 12 }}
           {{- end }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
               - name: https
                 containerPort: 9956
