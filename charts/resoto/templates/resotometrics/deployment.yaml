@@ -48,13 +48,13 @@ spec:
           {{- toYaml .Values.resotometrics.extraArgs | nindent 10 }}
           {{- end }}
           env:
-          - name: PSK
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "resoto.fullname" . }}-psk
-                key: "psk"
-          {{- if .Values.resotoworker.extraEnv }}
-          {{- toYaml .Values.resotoworker.extraEnv | nindent 12 }}
+            - name: PSK
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "resoto.fullname" . }}-psk
+                  key: "psk"
+          {{- if .Values.resotometrics.extraEnv }}
+          {{- toYaml .Values.resotometrics.extraEnv | nindent 12 }}
           {{- end }}
           ports:
             - name: https
