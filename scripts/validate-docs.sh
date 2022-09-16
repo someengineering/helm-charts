@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-cd charts/resoto
+cd someengineering/resoto
 
 NEW_FILE="$(helm-docs --dry-run)"
 OLD_FILE="$(cat README.md)"

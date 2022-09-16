@@ -50,7 +50,7 @@ helm repo add someengineering https://someengineering.github.io/helm-charts
 EOF
 else
   DIR="$(dirname "$(realpath "$0")")"
-  helm upgrade -i --namespace resoto resoto "$DIR/../charts/resoto" --set image.tag=$IMAGE_TAG -f - <<EOF
+  helm upgrade -i --namespace resoto resoto "$DIR/../someengineering/resoto" --set image.tag=$IMAGE_TAG -f - <<EOF
   resotocore:
     graphdb:
       server: http://single-server:8529
