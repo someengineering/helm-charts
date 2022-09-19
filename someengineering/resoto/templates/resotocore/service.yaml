@@ -1,4 +1,4 @@
-apiVersion: {{ include "common.capabilities.apiService.apiVersion" . }}
+apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "resoto.fullname" . }}-resotocore
