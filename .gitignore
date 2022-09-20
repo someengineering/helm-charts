@@ -2,6 +2,6 @@
 .vscode
 
 *.bin
-**.charts/
-**.lock
 .DS_STORE
+**.lock
+**/charts
