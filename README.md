@@ -3,7 +3,7 @@
 ## Usage
 
 ```bash
-$ helm repo add resoto https://helm.resoto.com
+$ helm repo add someengineering https://helm.some.engineering
 ```
 
 ## Charts
