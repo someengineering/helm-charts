@@ -17,7 +17,7 @@ $ helm repo add someengineering https://helm.some.engineering
 
 ## Contact
 
-Have questions or need help? [Join the Some Engineering Discord server](https://discord.gg/someengineering) or [open a GitHub issue](https://github.com/someengineering/helm-charts/issues/new).
+Have questions or need help? [Join us in the Some Engineering Discord server](https://discord.gg/someengineering) or [open a GitHub issue](https://github.com/someengineering/helm-charts/issues/new).
 
 ## License
 
