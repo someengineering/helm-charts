@@ -20,8 +20,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "C.K."
+          git config user.email "98986935+some-ci@users.noreply.github.com"
 
       - name: Install Helm
         uses: azure/setup-helm@v1
@@ -29,9 +29,18 @@ jobs:
           version: v3.8.1
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.4.0
+        uses: helm/chart-releaser-action@v1
         with:
           charts_dir: someengineering
           charts_repo_url: https://helm.some.engineering
         env:
-          CR_TOKEN: '${{ secrets.SOME_CI_PAT }}'
+          CR_TOKEN: ${{ secrets.SOME_CI_PAT }}
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.SOME_CI_PAT }}
+          publish_dir: ./public
+          keep_files: true
+          user_name: C.K.
+          user_email: 98986935+some-ci@users.noreply.github.com
