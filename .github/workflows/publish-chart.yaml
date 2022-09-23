@@ -7,7 +7,6 @@ on:
     branches:
       - main
 
-
 jobs:
   package-release:
     permissions:
@@ -32,7 +31,7 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         with:
-          charts_dir: charts
-          charts_repo_url: https://helm.resoto.com
+          charts_dir: someengineering
+          charts_repo_url: https://helm.some.engineering
         env:
-          CR_TOKEN: "${{ secrets.SOME_CI_PAT }}"
+          CR_TOKEN: '${{ secrets.SOME_CI_PAT }}'
