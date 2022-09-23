@@ -1,5 +1,7 @@
 # Some Engineering Helm Chart Repository
 
+![](https://user-images.githubusercontent.com/2124094/164599444-448f92f1-7a73-4a86-a377-bc650f10e756.png)
+
 ## Usage
 
 ```bash
