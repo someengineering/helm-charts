@@ -72,6 +72,10 @@ spec:
           {{- if .Values.resotocore.extraEnv }}
           {{- toYaml .Values.resotocore.extraEnv | nindent 12 }}
           {{- end }}
+          - name: HELM_VERSION
+            value: {{ .Chart.Version }}
+          - name: HELM_APP_VERSION
+            value: {{ .Chart.AppVersion }}
           ports:
             - name: api
               containerPort: 8900
