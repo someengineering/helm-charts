@@ -36,6 +36,10 @@ jobs:
         env:
           CR_TOKEN: ${{ secrets.SOME_CI_PAT }}
 
+      - name: Move files
+        run: |
+          mv ./README.md ./public/
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
