@@ -1,6 +1,13 @@
 # -- Default values for resoto.
 # -- This is a YAML-formatted file.
 # -- Declare variables to be passed into your templates.
+arangoDB:
+  enabled: true
+  operator:
+    replicaCount: 1
+
+arangoDBCRD:
+  enabled: true
 
 replicaCount: 1
 

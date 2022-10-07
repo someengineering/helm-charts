@@ -58,6 +58,7 @@ else
 EOF
 fi
 
+
 # wait for it to be ready
 kubectl --namespace resoto rollout status deploy/resoto-resotocore --timeout=300s
 kubectl --namespace resoto rollout status deploy/resoto-resotoworker --timeout=300s
