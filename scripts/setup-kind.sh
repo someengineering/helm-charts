@@ -14,9 +14,8 @@ fi
 
 kubectl create ns resoto
 
-helm install --namespace resoto arango-crd https://github.com/arangodb/kube-arangodb/releases/download/1.2.4/kube-arangodb-crd-1.2.4.tgz
-## get the db's pod.
-#ARANGO_DB_POD=$(kubectl --namespace resoto get pod -larango_deployment=single-server -o name)
+helm install --namespace resoto arango-crd https://github.com/arangodb/kube-arangodb/releases/download/1.2.15/kube-arangodb-crd-1.2.15.tgz
+
 if [ -z "${CI_ENABLED}" ]; then
 helm repo add someengineering https://someengineering.github.io/helm-charts
 helm install --namespace resoto resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
@@ -35,7 +34,6 @@ else
       server: http://single-server:8529
 EOF
 fi
-
 
 # wait for it to be ready
 kubectl --namespace resoto rollout status deploy/resoto-resotocore --timeout=300s
