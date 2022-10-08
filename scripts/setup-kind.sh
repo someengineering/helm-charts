@@ -14,7 +14,6 @@ fi
 
 kubectl create ns resoto
 
-
 helm install --namespace resoto arango-crd https://github.com/arangodb/kube-arangodb/releases/download/1.2.4/kube-arangodb-crd-1.2.4.tgz
 ## get the db's pod.
 #ARANGO_DB_POD=$(kubectl --namespace resoto get pod -larango_deployment=single-server -o name)
