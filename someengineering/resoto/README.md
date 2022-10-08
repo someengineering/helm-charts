@@ -21,6 +21,8 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.17 |
+| https://arangodb.github.io/kube-arangodb | arangodb-crd(kube-arangodb-crd) | 1.2.17 |
 | https://charts.bitnami.com/bitnami | common(common) | 2.0.2 |
 
 ## Values
@@ -28,6 +30,8 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| arangoDB | object | `{"enabled":true,"operator":{"replicaCount":1}}` | Declare variables to be passed into your templates. |
+| arangoDBCRD.enabled | bool | `true` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | imagePullSecrets | list | `[]` |  |
