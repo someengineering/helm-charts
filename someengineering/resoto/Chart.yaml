@@ -11,16 +11,16 @@ maintainers:
 icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
 home: https://resoto.com
 dependencies:
-   - name: kube-arangodb-crd
-     alias: arangodb-crd
-     repository: https://arangodb.github.io/kube-arangodb
-     condition: arangoDBCRD.enabled
-     version: 1.2.17
-   - name: kube-arangodb
-     alias: arangodb
-     repository: https://arangodb.github.io/kube-arangodb
-     condition: arangoDB.enabled
-     version: 1.2.17
+  - name: kube-arangodb-crd
+    alias: arangodb-crd
+    repository: https://arangodb.github.io/kube-arangodb
+    condition: arangoDBCRD.enabled
+    version: 1.2.17
+  - name: kube-arangodb
+    alias: arangodb
+    repository: https://arangodb.github.io/kube-arangodb
+    condition: arangoDB.enabled
+    version: 1.2.17
   - name: common
     alias: common
     repository: https://charts.bitnami.com/bitnami
