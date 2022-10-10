@@ -3,6 +3,8 @@
 # -- Declare variables to be passed into your templates.
 arangoDB:
   enabled: true
+  # -- External access type for ArangoDB, see values here: https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
+  externalAccessType: "None"
   operator:
     replicaCount: 1
 

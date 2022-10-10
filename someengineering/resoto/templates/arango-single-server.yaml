@@ -1,8 +1,12 @@
-apiVersion: "database.arangodb.com/v1alpha"
+{{- if .Values.arangoDB.enabled }}
+apiVersion: "database.arangodb.com/v1"
 kind: "ArangoDeployment"
 metadata:
   name: "single-server"
 spec:
+  externalAccess:
+    type: {{ .Values.arangoDB.externalAccessType }}
   mode: Single
   tls:
     caSecretName: None
+{{- end }}
