@@ -29,7 +29,8 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| arangoDB | object | `{"enabled":true,"operator":{"replicaCount":1}}` | Declare variables to be passed into your templates. |
+| arangoDB | object | `{"enabled":true,"externalAccessType":"None","operator":{"replicaCount":1}}` | Declare variables to be passed into your templates. |
+| arangoDB.externalAccessType | string | `"None"` | External access type for ArangoDB, see values here: https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string |
 | arangoDBCRD.enabled | bool | `true` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
