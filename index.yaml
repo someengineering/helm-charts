@@ -2,6 +2,39 @@ apiVersion: v1
 entries:
   resoto:
   - apiVersion: v2
+    appVersion: 2.4.4
+    created: "2022-10-19T23:16:43.981865449Z"
+    dependencies:
+    - alias: common
+      name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.0.2
+    description: A Helm chart for Kubernetes
+    digest: 11dd871127864597a240a136dccf8a12767e840867caa7075252cc8ce6baf52d
+    home: https://resoto.com
+    icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
+    keywords:
+    - resoto
+    - cloud
+    - automation
+    - aws
+    - gcp
+    - digitalocean
+    - k8s
+    maintainers:
+    - name: kushthedude
+    - email: eng@some.engineering
+      name: aquamatthias
+    name: resoto
+    sources:
+    - https://github.com/someengineering/resoto
+    type: application
+    urls:
+    - https://github.com/someengineering/helm-charts/releases/download/resoto-0.3.13/resoto-0.3.13.tgz
+    version: 0.3.13
+  - apiVersion: v2
     appVersion: 2.4.3
     created: "2022-10-11T15:21:52.742926376Z"
     dependencies:
@@ -325,4 +358,4 @@ entries:
     urls:
     - https://github.com/someengineering/helm-charts/releases/download/resoto-0.3.0/resoto-0.3.0.tgz
     version: 0.3.0
-generated: "2022-10-11T15:21:52.742990077Z"
+generated: "2022-10-19T23:16:43.982018851Z"
