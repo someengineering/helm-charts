@@ -77,7 +77,7 @@ spec:
           - name: HELM_APP_VERSION
             value: {{ .Chart.AppVersion }}
           - name: HELM_INSTALL_FLAG
-            value: true
+            value: "true"
           ports:
             - name: api
               containerPort: 8900
