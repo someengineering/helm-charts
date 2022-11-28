@@ -21,7 +21,7 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.15 |
+| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.20 |
 | https://charts.bitnami.com/bitnami | common(common) | 2.0.2 |
 
 ## Values

@@ -14,7 +14,7 @@ fi
 
 kubectl create ns resoto
 
-helm install --namespace resoto arango-crd https://github.com/arangodb/kube-arangodb/releases/download/1.2.15/kube-arangodb-crd-1.2.15.tgz
+helm install --namespace resoto arango-crd https://github.com/arangodb/kube-arangodb/releases/download/1.2.20/kube-arangodb-crd-1.2.20.tgz
 
 if [ -z "${CI_ENABLED}" ]; then
 helm repo add someengineering https://someengineering.github.io/helm-charts
