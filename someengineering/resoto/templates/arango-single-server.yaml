@@ -1,9 +1,16 @@
+{{- if .Values.arangodb.enabled }}
 apiVersion: "database.arangodb.com/v1alpha"
 kind: "ArangoDeployment"
 metadata:
   name: "single-server"
 spec:
   image: "arangodb/arangodb:3.8.8"
-  mode: Single
+  mode: {{ .Values.arangodb.deployment.mode }}
+  {{- with .Values.arangodb.deployment.spec }}
+  {{. | toYaml | nindent 2}}
+  {{- end}}
+  externalAccess:
+    type: {{ .Values.arangodb.externalAccessType }}
   tls:
     caSecretName: None
+{{- end }}

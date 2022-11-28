@@ -14,7 +14,7 @@ dependencies:
   - name: kube-arangodb
     alias: arangodb
     repository: https://arangodb.github.io/kube-arangodb
-    condition: arangoDB.enabled
+    condition: arangodb.enabled
     version: 1.2.20
   - name: common
     alias: common
