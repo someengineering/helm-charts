@@ -34,13 +34,14 @@ A Helm chart for Kubernetes
 | arangoDB.operator | object | `{"replicaCount":1}` | For a list of possible configuration values. |
 | arangoDB.operator.replicaCount | int | `1` | Replication count for Operator deployment. |
 | fullnameOverride | string | `""` | In case you want to override the generated fully qualified application name. |
+| image | object | `{"tag":""}` | Image tag used for all resoto components. The specific component version always takes precedence. |
 | imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | imagePullSecrets | list | `[]` | In case you use a custom repository which needs secrets. |
 | nameOverride | string | `""` | In case you want to override the name of this chart. |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Configure annotations for all pods. |
 | podSecurityContext | object | `{}` | Configure the security context on the pod level. |
-| replicaCount | int | `1` | Only increase this number, if you know what you are doing. |
+| replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
 | resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://single-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
@@ -61,7 +62,7 @@ A Helm chart for Kubernetes
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
 | resotocore.overrides[1] | string | `"resotocore.api.ui_path=/usr/local/resoto/ui/"` | this is location of the UI in the docker container |
 | resotocore.service.port | int | `8900` | Port of the service. |
-| resotocore.service.type | string | `"ClusterIP"` | If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer. |
+| resotocore.service.type | string | `"ClusterIP"` | Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer. |
 | resotometrics | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotometrics","tag":""},"overrides":[],"serviceMonitor":{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}}` | Configuration for ResotoMetrics. |
 | resotometrics.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotometrics.extraEnv | list | `[]` | Use this section to pass extra environment variables |
@@ -85,7 +86,7 @@ A Helm chart for Kubernetes
 | serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Define and configure a service account that used by Resoto. |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

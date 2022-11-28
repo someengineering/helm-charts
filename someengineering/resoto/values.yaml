@@ -12,8 +12,7 @@ arangoDB:
     # -- Replication count for Operator deployment.
     replicaCount: 1
 
-# -- Defines the number of workers to run in parallel.
-# -- Only increase this number, if you know what you are doing.
+# -- Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing.
 replicaCount: 1
 
 # -- In case you use a custom repository which needs secrets.
@@ -32,8 +31,7 @@ serviceAccount:
   create: true
   # -- Annotations to add to the service account
   annotations: {}
-  # -- The name of the service account to use.
-  # -- If not set and create is true, a name is generated using the fullname template
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
 
 # -- Configure annotations for all pods.
@@ -101,8 +99,7 @@ resotocore:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
   service:
-    # -- Type of service. ClusterIP is only reachable within the cluster.
-    # -- If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer.
+    # -- Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer.
     type: ClusterIP
     # -- Port of the service.
     port: 8900
@@ -169,3 +166,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# -- Image tag used for all resoto components. The specific component version always takes precedence.
+image:
+  tag: ""
