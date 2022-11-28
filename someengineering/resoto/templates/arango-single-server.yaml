@@ -3,6 +3,7 @@ kind: "ArangoDeployment"
 metadata:
   name: "single-server"
 spec:
+  image: "arangodb/arangodb:3.8.8"
   mode: Single
   tls:
     caSecretName: None
