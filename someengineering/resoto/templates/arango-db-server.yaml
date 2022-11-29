@@ -9,6 +9,10 @@ spec:
   {{- with .Values.arangodb.deployment.spec }}
   {{. | toYaml | nindent 2}}
   {{- end}}
+  {{ .Values.arangodb.deployment.mode | lower}}:
+    resources:
+      requests:
+        storage: {{ .Values.arangodb.deployment.persistentVolumeSize }}
   externalAccess:
     type: {{ .Values.arangodb.deployment.externalAccessType }}
   tls:
