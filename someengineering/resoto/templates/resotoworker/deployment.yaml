@@ -35,7 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.resotoworker.image.repository }}:{{ .Values.resotoworker.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.resotoworker.image.repository }}:{{ .Values.resotoworker.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
           args:
           - --resotocore-uri
           - https://{{ include "resoto.fullname" . }}-resotocore:8900

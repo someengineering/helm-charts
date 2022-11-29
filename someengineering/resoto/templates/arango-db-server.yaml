@@ -1,0 +1,16 @@
+{{- if .Values.arangodb.enabled }}
+apiVersion: "database.arangodb.com/v1alpha"
+kind: "ArangoDeployment"
+metadata:
+  name: "graph-db-server"
+spec:
+  image: "arangodb/arangodb:{{ .Values.arangodb.deployment.version }}"
+  mode: {{ .Values.arangodb.deployment.mode }}
+  {{- with .Values.arangodb.deployment.spec }}
+  {{. | toYaml | nindent 2}}
+  {{- end}}
+  externalAccess:
+    type: {{ .Values.arangodb.deployment.externalAccessType }}
+  tls:
+    caSecretName: {{ .Values.arangodb.deployment.tlsCASecretName }}
+{{- end }}
