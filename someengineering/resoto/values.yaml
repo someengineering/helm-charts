@@ -193,7 +193,14 @@ image:
 prometheus:
   # -- You can disable the Prometheus dependency by setting this to false.
   enabled: true
-
+  # -- Define attributes for the Prometheus service.
+  server:
+    # -- Duration to keep time series data.
+    retention: "712d"
+    # -- Define the persistent volume properties.
+    persistentVolume:
+      # -- Size of the persistent volume.
+      size: 50Gi
   # @ignored - disable alertmanager coming from the chart.
   alertmanager:
     enabled: false
@@ -214,51 +221,14 @@ prometheus:
     enabled: false
     serviceAccount:
       create: false
-  # @ignored - redefine scrape configs: only watch services, increase scrape interval and ignore insecure tls.
+  # @ignored - redefine scrape configs: only scrape resotometrics.
   serverFiles:
     prometheus.yml:
       scrape_configs:
-        - job_name: 'kubernetes-service-endpoints'
-          honor_labels: true
-          scrape_interval: 2m
-          kubernetes_sd_configs:
-            - role: endpoints
+        - job_name: "resotometrics"
+          scheme: https
+          scrape_interval: 15m
           tls_config:
             insecure_skip_verify: true
-          relabel_configs:
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-              action: keep
-              regex: true
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_slow]
-              action: drop
-              regex: true
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-              action: replace
-              target_label: __scheme__
-              regex: (https?)
-            - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-              action: replace
-              target_label: __metrics_path__
-              regex: (.+)
-            - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-              action: replace
-              target_label: __address__
-              regex: (.+?)(?::\d+)?;(\d+)
-              replacement: $1:$2
-            - action: labelmap
-              regex: __meta_kubernetes_service_annotation_prometheus_io_param_(.+)
-              replacement: __param_$1
-            - action: labelmap
-              regex: __meta_kubernetes_service_label_(.+)
-            - source_labels: [__meta_kubernetes_namespace]
-              action: replace
-              target_label: namespace
-            - source_labels: [__meta_kubernetes_service_name]
-              action: replace
-              target_label: service
-            - source_labels: [__meta_kubernetes_pod_node_name]
-              action: replace
-              target_label: node
-
-
-
+          static_configs:
+            - targets: [ "resoto-resotometrics:9955" ]
