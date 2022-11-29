@@ -30,10 +30,11 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity for all pods. |
-| arangodb | object | `{"deployment":{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None","version":"3.8.8"},"enabled":true,"operator":{"replicaCount":1}}` | Install ArangoDB operator as dependency. |
-| arangodb.deployment | object | `{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None","version":"3.8.8"}` | Defines the ArangoDB deployment and database. |
+| arangodb | object | `{"deployment":{"externalAccessType":"None","mode":"Single","persistentVolumeSize":"50Gi","spec":{},"tlsCASecretName":"None","version":"3.8.8"},"enabled":true,"operator":{"replicaCount":1}}` | Install ArangoDB operator as dependency. |
+| arangodb.deployment | object | `{"externalAccessType":"None","mode":"Single","persistentVolumeSize":"50Gi","spec":{},"tlsCASecretName":"None","version":"3.8.8"}` | Defines the ArangoDB deployment and database. |
 | arangodb.deployment.externalAccessType | string | `"None"` | Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string |
 | arangodb.deployment.mode | string | `"Single"` | The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string |
+| arangodb.deployment.persistentVolumeSize | string | `"50Gi"` | The size of the volume for the database data. |
 | arangodb.deployment.spec | object | `{}` | The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference |
 | arangodb.deployment.tlsCASecretName | string | `"None"` | Secret name that holds the ArangoDB certificate authority. |
 | arangodb.deployment.version | string | `"3.8.8"` | The version of ArangoDB to use. |
