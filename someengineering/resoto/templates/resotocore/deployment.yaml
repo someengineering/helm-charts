@@ -48,6 +48,10 @@ spec:
           - --override
           # add the host name of the resoto core service to the certificate
           - resotocore.api.host_certificate.san_dns_names={{ include "resoto.fullname" . }}-resotocore
+          # if prometheus is enabled, define the tsdb url
+          {{- if .Values.prometheus.enabled }}
+          - resotocore.api.tsdb_proxy_url=http://resoto-prometheus-server/
+          {{- end }}
           # bind to all available network interfaces
           - resotocore.api.web_hosts=0.0.0.0
           {{- if .Values.resotocore.overrides }}

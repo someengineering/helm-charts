@@ -11,6 +11,10 @@ maintainers:
 icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
 home: https://resoto.com
 dependencies:
+  - name: prometheus
+    version: 18.1.0
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled
   - name: kube-arangodb
     alias: arangodb
     repository: https://arangodb.github.io/kube-arangodb
