@@ -13,6 +13,10 @@ arangodb:
     mode: Single
     # -- Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
     externalAccessType: "None"
+    # -- The version of ArangoDB to use.
+    version: "3.8.8"
+    # -- Secret name that holds the ArangoDB certificate authority.
+    tlsCASecretName: "None"
     # -- The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference
     spec: {}
 
@@ -55,7 +59,7 @@ resotocore:
   # -- This defines the access to the graph database
   graphdb:
     # -- The complete url of the graph database
-    server: http://single-server:8529
+    server: http://graph-db-server:8529
     # -- The name of the database to use
     database: resoto
     # -- The name of the user to connect
@@ -180,6 +184,7 @@ tolerations: []
 # -- Configure node affinity for all pods.
 affinity: {}
 
-# -- Image tag used for all resoto components. The specific component version always takes precedence.
+# -- Image tag used for all resoto components.
 image:
+  # -- The specific component version always takes precedence.
   tag: ""

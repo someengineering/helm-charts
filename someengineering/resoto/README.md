@@ -29,16 +29,19 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity for all pods. |
-| arangodb | object | `{"deployment":{"externalAccessType":"None","mode":"Single","spec":{}},"enabled":true,"operator":{"replicaCount":1}}` | Install ArangoDB operator as dependency. |
-| arangodb.deployment | object | `{"externalAccessType":"None","mode":"Single","spec":{}}` | Defines the ArangoDB deployment and database. |
+| arangodb | object | `{"deployment":{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None","version":"3.8.8"},"enabled":true,"operator":{"replicaCount":1}}` | Install ArangoDB operator as dependency. |
+| arangodb.deployment | object | `{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None","version":"3.8.8"}` | Defines the ArangoDB deployment and database. |
 | arangodb.deployment.externalAccessType | string | `"None"` | Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string |
 | arangodb.deployment.mode | string | `"Single"` | The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string |
 | arangodb.deployment.spec | object | `{}` | The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference |
+| arangodb.deployment.tlsCASecretName | string | `"None"` | Secret name that holds the ArangoDB certificate authority. |
+| arangodb.deployment.version | string | `"3.8.8"` | The version of ArangoDB to use. |
 | arangodb.enabled | bool | `true` | You can disable the ArangoDB operator dependency by setting this to false. |
 | arangodb.operator | object | `{"replicaCount":1}` | For a list of possible configuration values. |
 | arangodb.operator.replicaCount | int | `1` | Replication count for Operator deployment. |
 | fullnameOverride | string | `""` | In case you want to override the generated fully qualified application name. |
-| image | object | `{"tag":""}` | Image tag used for all resoto components. The specific component version always takes precedence. |
+| image | object | `{"tag":""}` | Image tag used for all resoto components. |
+| image.tag | string | `""` | The specific component version always takes precedence. |
 | imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | imagePullSecrets | list | `[]` | In case you use a custom repository which needs secrets. |
 | nameOverride | string | `""` | In case you want to override the name of this chart. |
@@ -46,15 +49,15 @@ A Helm chart for Kubernetes
 | podAnnotations | object | `{}` | Configure annotations for all pods. |
 | podSecurityContext | object | `{}` | Configure the security context on the pod level. |
 | replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
-| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://single-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
+| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
-| resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://single-server:8529","username":"resoto"}` | This defines the access to the graph database |
+| resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"}` | This defines the access to the graph database |
 | resotocore.graphdb.database | string | `"resoto"` | The name of the database to use |
 | resotocore.graphdb.passwordSecret | object | `{"key":"password","name":"arango-user"}` | The secret to get the password from |
 | resotocore.graphdb.passwordSecret.key | string | `"password"` | The secret key to get the password from |
 | resotocore.graphdb.passwordSecret.name | string | `"arango-user"` | The secret name to get the password from |
-| resotocore.graphdb.server | string | `"http://single-server:8529"` | The complete url of the graph database |
+| resotocore.graphdb.server | string | `"http://graph-db-server:8529"` | The complete url of the graph database |
 | resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
 | resotocore.image.repository | string | `"somecr.io/someengineering/resotocore"` | Image repository |
 | resotocore.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
