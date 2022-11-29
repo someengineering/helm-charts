@@ -196,7 +196,7 @@ prometheus:
   # -- Define attributes for the Prometheus service.
   server:
     # -- Duration to keep time series data.
-    retention: "712d"
+    retention: "730d"
     # -- Define the persistent volume properties.
     persistentVolume:
       # -- Size of the persistent volume.
