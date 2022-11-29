@@ -188,3 +188,47 @@ affinity: {}
 image:
   # -- The specific component version always takes precedence.
   tag: ""
+
+# -- Configure the prometheus component. Type helm show values prometheus-community/prometheus for a list of possible configuration values.
+prometheus:
+  # -- You can disable the Prometheus dependency by setting this to false.
+  enabled: true
+  # -- Define attributes for the Prometheus service.
+  server:
+    # -- Duration to keep time series data.
+    retention: "730d"
+    # -- Define the persistent volume properties.
+    persistentVolume:
+      # -- Size of the persistent volume.
+      size: 50Gi
+  # @ignored - disable alertmanager coming from the chart.
+  alertmanager:
+    enabled: false
+    serviceAccount:
+      create: false
+    persistence:
+      enabled: false
+  # @ignored - disable kube state metrics coming from the chart.
+  kubeStateMetrics:
+    enabled: false
+  # @ignored - disable node exporter coming from the chart.
+  prometheus-node-exporter:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - disable push gateway coming from the chart.
+  prometheus-pushgateway:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - redefine scrape configs: only scrape resotometrics.
+  serverFiles:
+    prometheus.yml:
+      scrape_configs:
+        - job_name: "resotometrics"
+          scheme: https
+          scrape_interval: 15m
+          tls_config:
+            insecure_skip_verify: true
+          static_configs:
+            - targets: [ "resoto-resotometrics:9955" ]

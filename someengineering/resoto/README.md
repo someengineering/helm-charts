@@ -23,6 +23,7 @@ A Helm chart for Kubernetes
 |------------|------|---------|
 | https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.20 |
 | https://charts.bitnami.com/bitnami | common(common) | 2.0.2 |
+| https://prometheus-community.github.io/helm-charts | prometheus | 18.1.0 |
 
 ## Values
 
@@ -48,6 +49,12 @@ A Helm chart for Kubernetes
 | nodeSelector | object | `{}` | Configure node selectors for all pods. |
 | podAnnotations | object | `{}` | Configure annotations for all pods. |
 | podSecurityContext | object | `{}` | Configure the security context on the pod level. |
+| prometheus | object | `{"enabled":true,"server":{"persistentVolume":{"size":"50Gi"},"retention":"730d"}}` | Configure the prometheus component. Type helm show values prometheus-community/prometheus for a list of possible configuration values. |
+| prometheus.enabled | bool | `true` | You can disable the Prometheus dependency by setting this to false. |
+| prometheus.server | object | `{"persistentVolume":{"size":"50Gi"},"retention":"730d"}` | Define attributes for the Prometheus service. |
+| prometheus.server.persistentVolume | object | `{"size":"50Gi"}` | Define the persistent volume properties. |
+| prometheus.server.persistentVolume.size | string | `"50Gi"` | Size of the persistent volume. |
+| prometheus.server.retention | string | `"730d"` | Duration to keep time series data. |
 | replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
 | resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
