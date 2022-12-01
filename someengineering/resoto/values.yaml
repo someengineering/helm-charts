@@ -127,6 +127,8 @@ resotometrics:
     # -- Metrics scrape timeout
     scrapeTimeout: 25s
 
+# -- Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret resoto-psk.
+psk: ""
 
 # -- Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing.
 replicaCount: 1
