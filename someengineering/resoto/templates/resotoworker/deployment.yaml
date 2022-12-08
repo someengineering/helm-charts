@@ -57,9 +57,9 @@ spec:
           {{- end }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
-              - name: https
-                containerPort: 9956
-                protocol: TCP
+            - name: https
+              containerPort: 9956
+              protocol: TCP
           readinessProbe:
             httpGet:
               path: /health
@@ -75,10 +75,19 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
       affinity:
+        # prefer to run not on the same node as the core
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "kubernetes.io/hostname"
+                labelSelector:
+                  matchLabels:
+                    resoto: core
+        {{- with .Values.affinity }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
