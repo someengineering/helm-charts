@@ -2,7 +2,7 @@
 {{- $fullName := include "resoto.fullname" . -}}
 {{- $fullName = (printf "%s%s" $fullName  "-resotocore") }}
 {{- $svcPort := .Values.resotocore.service.port -}}
-{{- if include "common.ingress.supportsIngressClassname" }}
+{{- if include "common.ingress.supportsIngressClassname" . }}
   {{- if not (hasKey .Values.resotocore.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.resotocore.ingress.annotations "kubernetes.io/ingress.class" .Values.resotocore.ingress.className}}
   {{- end }}
@@ -38,7 +38,7 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            {{- if include "common.ingress.supportsPathType" }}
+            {{- if include "common.ingress.supportsPathType" . }}
             pathType: {{ .pathType }}
             {{- end }}
             backend:
