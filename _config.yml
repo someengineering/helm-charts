@@ -1,10 +1,16 @@
 title: Some Engineering Helm Chart Repository
 author:
-  name: Copyright © 2023 Some Engineering Inc.
-
-theme: minima
+  name: Some Engineering Inc.
+  email: eng@some.engineering
+markdown: kramdown
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-remote-theme
+  - jekyll-redirect-from
+header_pages:
+  - someengineering/resoto/README.md
 minima:
-  skin: solarized-dark
+  skin: auto
   social_links:
     - { platform: github, user_url: 'https://github.com/someengineering' }
     - { platform: linkedin, user_url: 'https://linkedin.com/company/someengineering' }
