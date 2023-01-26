@@ -42,7 +42,7 @@ jobs:
           personal_token: ${{ secrets.SOME_CI_PAT }}
           cname: helm.some.engineering
           publish_dir: ./
-          exclude_assets: '.git*,scripts'
+          exclude_assets: '.github,.gitignore,scripts'
           keep_files: true
           enable_jekyll: true
           user_name: C.K.
