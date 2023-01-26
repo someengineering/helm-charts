@@ -12,7 +12,7 @@ $ helm repo add someengineering https://helm.some.engineering
 
 ### `resoto`
 
-- [Chart documentation](https://github.com/someengineering/helm-charts/blob/main/someengineering/resoto/README.md)
+- [Chart documentation](./someengineering/resoto/README.md)
 - [Installation instructions](https://resoto.com/docs/getting-started/install-resoto/kubernetes)
 
 ## Contact

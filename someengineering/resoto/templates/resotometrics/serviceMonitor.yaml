@@ -1,0 +1,21 @@
+{{- if .Values.resotometrics.serviceMonitor.enabled }}
+apiVersion: "monitoring.coreos.com/v1"
+kind: ServiceMonitor
+metadata:
+  labels:
+    resoto: metrics
+    {{- include "resoto.labels" . | nindent 4 }}
+  name: {{ include "resoto.fullname" . }}-resotometrics
+spec:
+  selector:
+    matchLabels:
+      resoto: metrics
+      {{- include "resoto.selectorLabels" . | nindent 6 }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace | quote }}
+  endpoints:
+  - port: metrics
+    interval: {{ .Values.resotometrics.serviceMonitor.interval }}
+    scrapeTimeout: {{ .Values.resotometrics.serviceMonitor.scrapeTimeout }}
+{{- end }}

@@ -1,0 +1,238 @@
+# -- Default values for resoto.
+# -- This is a YAML-formatted file.
+# -- Declare variables to be passed into your templates.
+
+# -- Install ArangoDB operator as dependency.
+arangodb:
+  # -- You can disable the ArangoDB operator dependency by setting this to false.
+  enabled: true
+
+  # -- Defines the ArangoDB deployment and database.
+  deployment:
+    # -- The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string
+    mode: Single
+    # -- Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
+    externalAccessType: "None"
+    # -- The version of ArangoDB to use.
+    version: "3.8.8"
+    # -- The size of the volume for the database data.
+    persistentVolumeSize: "50Gi"
+    # -- Secret name that holds the ArangoDB certificate authority.
+    tlsCASecretName: "None"
+    # -- The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference
+    spec: {}
+
+  # -- See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator
+  # -- For a list of possible configuration values.
+  operator:
+    # -- Replication count for Operator deployment.
+    replicaCount: 1
+
+# -- Configuration for ResotoCore.
+resotocore:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotocore
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  service:
+    # -- Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer.
+    type: ClusterIP
+    # -- Port of the service.
+    port: 8900
+
+  ingress:
+    # -- In case you want to expose the service outside the k8s cluster, you can use an ingress.
+    enabled: false
+    # -- The class of the ingress. If omitted, the configured default ingress class is used.
+    className: ""
+    # -- All annotations for the ingress.
+    annotations: {}
+      #  kubernetes.io/ingress.class: nginx
+    #  kubernetes.io/tls-acme: "true"
+    # -- Ingress host configuration.
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+
+  # -- This defines the access to the graph database
+  graphdb:
+    # -- The complete url of the graph database
+    server: http://graph-db-server:8529
+    # -- The name of the database to use
+    database: resoto
+    # -- The name of the user to connect
+    username: resoto
+    # -- The secret to get the password from
+    passwordSecret:
+      # -- The secret name to get the password from
+      name: arango-user
+      # -- The secret key to get the password from
+      key: password
+
+  # -- Use this section to override configuration values
+  overrides:
+    # -- start a collect cycle automatically when the first collector is connected
+    - resotocore.runtime.start_collect_on_subscriber_connect=true
+    # -- this is location of the UI in the docker container
+    - resotocore.api.ui_path=/usr/local/resoto/ui/
+
+  # -- Use this section to define extra arguments
+  extraArgs: []
+
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+
+# -- Configuration for ResotoWorker.
+resotoworker:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotoworker
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Use this section to override configuration values
+  overrides: []
+  # -- Use this section to define extra arguments
+  extraArgs: []
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+  # -- Use this section to define volumes of the worker
+  volumes: []
+  # -- Use this section to define volume mounts for the worker
+  volumeMounts: []
+
+
+# -- Configuration for ResotoMetrics.
+resotometrics:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/resotometrics
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Use this section to override configuration values
+  overrides: []
+  # -- Use this section to define extra arguments
+  extraArgs: []
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+  # -- Prometheus serviceMonitor configuration
+  serviceMonitor:
+    # -- Whether a Prometheus serviceMonitor should be created
+    enabled: false
+    # -- Metrics scrape interval
+    interval: 30s
+    # -- Metrics scrape timeout
+    scrapeTimeout: 25s
+
+# -- Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret resoto-psk.
+psk: ""
+
+# -- Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing.
+replicaCount: 1
+# -- In case you use a custom repository which needs secrets.
+imagePullSecrets: []
+# -- In case you want to override the name of this chart.
+nameOverride: ""
+# -- In case you want to override the generated fully qualified application name.
+fullnameOverride: ""
+# -- The image pull policy
+imagePullPolicy: "Always"
+
+# -- Define and configure a service account that used by Resoto.
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Configure annotations for all pods.
+podAnnotations: {}
+
+# -- Configure the security context on the pod level.
+podSecurityContext: {}
+#  fsGroup: 2000
+
+# -- Configure the security context on the container level.
+securityContext: {}
+  #  capabilities:
+  #    drop:
+  #    - ALL
+  #  readOnlyRootFilesystem: true
+  #  runAsNonRoot: true
+#  runAsUser: 1000
+
+# -- Define resources requests and limits for all pods.
+resources: {}
+  # -- We usually recommend not to specify default resources and to leave this as a conscious
+  # -- choice for the user. This also increases chances charts run on environments with little
+  # -- resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # -- lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #  limits:
+  #   cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+# -- Configure node selectors for all pods.
+nodeSelector: {}
+
+# -- Configure toleration's for all pods.
+tolerations: []
+
+# -- Configure node affinity for all pods.
+affinity: {}
+
+# -- Image tag used for all resoto components.
+image:
+  # -- The specific component version always takes precedence.
+  tag: ""
+
+# -- Configure the prometheus component. Type helm show values prometheus-community/prometheus for a list of possible configuration values.
+prometheus:
+  # -- You can disable the Prometheus dependency by setting this to false.
+  enabled: true
+  # -- Define attributes for the Prometheus service.
+  server:
+    # -- Duration to keep time series data.
+    retention: "730d"
+    # -- Define the persistent volume properties.
+    persistentVolume:
+      # -- Size of the persistent volume.
+      size: 50Gi
+  # @ignored - disable alertmanager coming from the chart.
+  alertmanager:
+    enabled: false
+    serviceAccount:
+      create: false
+    persistence:
+      enabled: false
+  # @ignored - disable kube state metrics coming from the chart.
+  kubeStateMetrics:
+    enabled: false
+  # @ignored - disable node exporter coming from the chart.
+  prometheus-node-exporter:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - disable push gateway coming from the chart.
+  prometheus-pushgateway:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - redefine scrape configs: only scrape resotometrics.
+  serverFiles:
+    prometheus.yml:
+      scrape_configs:
+        - job_name: "resotometrics"
+          scheme: https
+          scrape_interval: 15m
+          tls_config:
+            insecure_skip_verify: true
+          static_configs:
+            - targets: [ "resoto-resotometrics:9955" ]

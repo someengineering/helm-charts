@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "resoto.fullname" . }}-resotometrics
+  labels:
+    resoto: metrics
+    {{- include "resoto.labels" . | nindent 4 }}
+  {{- if not .Values.resotometrics.serviceMonitor.enabled }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/metrics'
+    prometheus.io/port: '9955'
+    prometheus.io/scheme: 'https'
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9955
+      protocol: TCP
+      name: metrics
+  selector:
+    resoto: metrics
+    {{- include "resoto.selectorLabels" . | nindent 4 }}
