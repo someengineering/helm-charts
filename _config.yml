@@ -1,5 +1,12 @@
+title: Some Engineering Helm Chart Repository
+author:
+  name: Some Engineering Inc.
+  email: eng@some.engineering
 markdown: kramdown
-theme: minima
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-remote-theme
+  - jekyll-redirect-from
 minima:
   skin: solarized-dark
   social_links:
