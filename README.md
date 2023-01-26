@@ -1,4 +1,5 @@
 ---
+title: Home
 permalink: /
 redirect_from:
   - /someengineering/
