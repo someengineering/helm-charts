@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.6.7](https://img.shields.io/badge/Version-0.6.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
+![Version: 0.6.8](https://img.shields.io/badge/Version-0.6.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.4](https://img.shields.io/badge/AppVersion-3.0.4-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -58,7 +58,7 @@ A Helm chart for Kubernetes
 | prometheus.server.retention | string | `"730d"` | Duration to keep time series data. |
 | psk | string | `""` | Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret resoto-psk. |
 | replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
-| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
+| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"}` | This defines the access to the graph database |
@@ -74,9 +74,8 @@ A Helm chart for Kubernetes
 | resotocore.ingress.className | string | `""` | The class of the ingress. If omitted, the configured default ingress class is used. |
 | resotocore.ingress.enabled | bool | `false` | In case you want to expose the service outside the k8s cluster, you can use an ingress. |
 | resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | Ingress host configuration. |
-| resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true","resotocore.api.ui_path=/usr/local/resoto/ui/"]` | Use this section to override configuration values |
+| resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true"]` | Use this section to override configuration values |
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
-| resotocore.overrides[1] | string | `"resotocore.api.ui_path=/usr/local/resoto/ui/"` | this is location of the UI in the docker container |
 | resotocore.service.port | int | `8900` | Port of the service. |
 | resotocore.service.type | string | `"ClusterIP"` | Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer. |
 | resotometrics | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotometrics","tag":""},"overrides":[],"serviceMonitor":{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}}` | Configuration for ResotoMetrics. |
