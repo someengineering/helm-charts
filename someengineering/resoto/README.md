@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.6.10](https://img.shields.io/badge/Version-0.6.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
+![Version: 0.6.11](https://img.shields.io/badge/Version-0.6.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -44,7 +44,7 @@ A Helm chart for Kubernetes
 | fullnameOverride | string | `""` | In case you want to override the generated fully qualified application name. |
 | image | object | `{"tag":""}` | Image tag used for all resoto components. |
 | image.tag | string | `""` | The specific component version always takes precedence. |
-| imagePullPolicy | string | `"Always"` | The image pull policy |
+| imagePullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | imagePullSecrets | list | `[]` | In case you use a custom repository which needs secrets. |
 | nameOverride | string | `""` | In case you want to override the name of this chart. |
 | nodeSelector | object | `{}` | Configure node selectors for all pods. |

@@ -137,7 +137,7 @@ nameOverride: ""
 # -- In case you want to override the generated fully qualified application name.
 fullnameOverride: ""
 # -- The image pull policy
-imagePullPolicy: "Always"
+imagePullPolicy: "IfNotPresent"
 
 # -- Define and configure a service account that used by Resoto.
 serviceAccount:
