@@ -13,17 +13,21 @@ if [ -z "${NO_START_KIND}" ]; then
 fi
 
 if [ -z "${CI_ENABLED}" ]; then
-helm repo add someengineering https://someengineering.github.io/helm-charts
-helm install resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
-  resotocore:
-    extraArgs: ["--analytics-opt-out"]
+  helm repo add someengineering https://someengineering.github.io/helm-charts
+  helm install resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
+resotocore:
+  extraArgs: ["--analytics-opt-out"]
+prometheus:
+  enabled: false
 EOF
 else
   DIR="$(dirname "$(realpath "$0")")"
   helm dependency update "$DIR/../someengineering/resoto"
   helm upgrade -i resoto "$DIR/../someengineering/resoto" --set image.tag=$IMAGE_TAG -f - <<EOF
-  resotocore:
-    extraArgs: ["--analytics-opt-out"]
+resotocore:
+  extraArgs: ["--analytics-opt-out"]
+prometheus:
+  enabled: false
 EOF
 fi
 
