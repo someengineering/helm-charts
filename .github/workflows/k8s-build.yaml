@@ -28,17 +28,17 @@ jobs:
         run: |
           NO_START_KIND=1 CI_ENABLED=1 IMAGE_TAG=edge bash -x ./scripts/setup-kind.sh
           # make sure we get the example collector in a reasonable time.
-          timeout 10m /bin/bash -c "until echo kind | kubectl --namespace resoto exec -i deploy/resoto-resotocore -- resh --stdin | grep example; do sleep 1; done"
+          timeout 10m /bin/bash -c "until echo kind | kubectl exec -i deploy/resoto-resotocore -- resh --stdin | grep example; do sleep 1; done"
       - name: Debug info on failure
         if: ${{ failure() }}
         run: |
           echo "Nodes:"
           kubectl get nodes -o wide
           echo "Cluster state:"
-          kubectl describe all --namespace resoto
+          kubectl describe all
           echo "Core logs:"
-          kubectl logs --namespace resoto deploy/resoto-resotocore
+          kubectl logs deploy/resoto-resotocore
           echo "Worker logs:"
-          kubectl logs --namespace resoto deploy/resoto-resotoworker
+          kubectl logs deploy/resoto-resotoworker
           echo "Metrics logs:"
-          kubectl logs --namespace resoto deploy/resoto-resotometrics
+          kubectl logs deploy/resoto-resotometrics

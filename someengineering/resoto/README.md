@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.6.18](https://img.shields.io/badge/Version-0.6.18-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -10,7 +10,6 @@ A Helm chart for Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| kushthedude |  |  |
 | aquamatthias | <eng@some.engineering> |  |
 
 ## Source Code
@@ -21,7 +20,7 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.20 |
+| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.24 |
 | https://charts.bitnami.com/bitnami | common(common) | 2.0.2 |
 | https://prometheus-community.github.io/helm-charts | prometheus | 18.1.0 |
 
@@ -30,17 +29,17 @@ A Helm chart for Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Configure node affinity for all pods. |
-| arangodb | object | `{"deployment":{"externalAccessType":"None","mode":"Single","persistentVolumeSize":"50Gi","spec":{},"tlsCASecretName":"None","version":"3.8.8"},"enabled":true,"operator":{"replicaCount":1}}` | Install ArangoDB operator as dependency. |
-| arangodb.deployment | object | `{"externalAccessType":"None","mode":"Single","persistentVolumeSize":"50Gi","spec":{},"tlsCASecretName":"None","version":"3.8.8"}` | Defines the ArangoDB deployment and database. |
-| arangodb.deployment.externalAccessType | string | `"None"` | Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string |
-| arangodb.deployment.mode | string | `"Single"` | The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string |
-| arangodb.deployment.persistentVolumeSize | string | `"50Gi"` | The size of the volume for the database data. |
-| arangodb.deployment.spec | object | `{}` | The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference |
-| arangodb.deployment.tlsCASecretName | string | `"None"` | Secret name that holds the ArangoDB certificate authority. |
-| arangodb.deployment.version | string | `"3.8.8"` | The version of ArangoDB to use. |
-| arangodb.enabled | bool | `true` | You can disable the ArangoDB operator dependency by setting this to false. |
-| arangodb.operator | object | `{"replicaCount":1}` | For a list of possible configuration values. |
+| arangodb | object | `{"operator":{"deployment":{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None"},"enabled":false,"replicaCount":1},"persistentVolumeSize":"50Gi","version":"3.10.4"}` | Install ArangoDB operator as dependency. |
+| arangodb.operator | object | `{"deployment":{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None"},"enabled":false,"replicaCount":1}` | See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator for a list of possible configuration values. |
+| arangodb.operator.deployment | object | `{"externalAccessType":"None","mode":"Single","spec":{},"tlsCASecretName":"None"}` | Defines the ArangoDB deployment and database. |
+| arangodb.operator.deployment.externalAccessType | string | `"None"` | Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string |
+| arangodb.operator.deployment.mode | string | `"Single"` | The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string |
+| arangodb.operator.deployment.spec | object | `{}` | The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference |
+| arangodb.operator.deployment.tlsCASecretName | string | `"None"` | Secret name that holds the ArangoDB certificate authority. |
+| arangodb.operator.enabled | bool | `false` | The ArangoDB operator is helpful for more complex deployments. Default is disabled, while a single instance database deployment is performed. |
 | arangodb.operator.replicaCount | int | `1` | Replication count for Operator deployment. |
+| arangodb.persistentVolumeSize | string | `"50Gi"` | The size of the volume for the database data. |
+| arangodb.version | string | `"3.10.4"` | The version of ArangoDB to use. |
 | fullnameOverride | string | `""` | In case you want to override the generated fully qualified application name. |
 | image | object | `{"tag":""}` | Image tag used for all resoto components. |
 | image.tag | string | `""` | The specific component version always takes precedence. |
