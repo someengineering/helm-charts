@@ -1,0 +1,14 @@
+{{- if .Values.arangodb.operator.enabled | not }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  - kubernetes.io/pvc-protection
+  name: graphdb-server-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{.Values.arangodb.persistentVolumeSize}}
+{{- end }}

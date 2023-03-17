@@ -1,20 +1,20 @@
-{{- if .Values.arangodb.enabled }}
-apiVersion: "database.arangodb.com/v1alpha"
+{{- if .Values.arangodb.operator.enabled }}
+apiVersion: "database.arangodb.com/v1"
 kind: "ArangoDeployment"
 metadata:
   name: "graph-db-server"
 spec:
-  image: "arangodb/arangodb:{{ .Values.arangodb.deployment.version }}"
-  mode: {{ .Values.arangodb.deployment.mode }}
-  {{- with .Values.arangodb.deployment.spec }}
+  image: "arangodb/arangodb:{{ .Values.arangodb.version }}"
+  mode: {{ .Values.arangodb.operator.deployment.mode }}
+  {{- with .Values.arangodb.operator.deployment.spec }}
   {{. | toYaml | nindent 2}}
   {{- end}}
-  {{ .Values.arangodb.deployment.mode | lower}}:
+  {{ .Values.arangodb.operator.deployment.mode | lower}}:
     resources:
       requests:
-        storage: {{ .Values.arangodb.deployment.persistentVolumeSize }}
+        storage: {{ .Values.arangodb.persistentVolumeSize }}
   externalAccess:
-    type: {{ .Values.arangodb.deployment.externalAccessType }}
+    type: {{ .Values.arangodb.operator.deployment.externalAccessType }}
   tls:
-    caSecretName: {{ .Values.arangodb.deployment.tlsCASecretName }}
+    caSecretName: {{ .Values.arangodb.operator.deployment.tlsCASecretName }}
 {{- end }}
