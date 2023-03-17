@@ -4,29 +4,28 @@
 
 # -- Install ArangoDB operator as dependency.
 arangodb:
-  # -- You can disable the ArangoDB operator dependency by setting this to false.
-  enabled: true
+  # -- The version of ArangoDB to use.
+  version: "3.10.4"
+  # -- The size of the volume for the database data.
+  persistentVolumeSize: "50Gi"
 
-  # -- Defines the ArangoDB deployment and database.
-  deployment:
-    # -- The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string
-    mode: Single
-    # -- Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
-    externalAccessType: "None"
-    # -- The version of ArangoDB to use.
-    version: "3.8.8"
-    # -- The size of the volume for the database data.
-    persistentVolumeSize: "50Gi"
-    # -- Secret name that holds the ArangoDB certificate authority.
-    tlsCASecretName: "None"
-    # -- The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference
-    spec: {}
-
-  # -- See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator
-  # -- For a list of possible configuration values.
+  # -- See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator for a list of possible configuration values.
   operator:
+    # -- The ArangoDB operator is helpful for more complex deployments. Default is disabled, while a single instance database deployment is performed.
+    enabled: false
     # -- Replication count for Operator deployment.
     replicaCount: 1
+    # -- Defines the ArangoDB deployment and database.
+    deployment:
+      # -- The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string
+      mode: Single
+      # -- Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
+      externalAccessType: "None"
+      # -- Secret name that holds the ArangoDB certificate authority.
+      tlsCASecretName: "None"
+      # -- The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference
+      spec: {}
+
 
 # -- Configuration for ResotoCore.
 resotocore:
