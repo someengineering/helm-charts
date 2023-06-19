@@ -3,6 +3,47 @@ entries:
   resoto:
   - apiVersion: v2
     appVersion: 3.5.2
+    created: "2023-06-19T13:23:37.379349991Z"
+    dependencies:
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 22.6.6
+    - alias: arangodb
+      condition: arangodb.operator.enabled
+      name: kube-arangodb
+      repository: https://arangodb.github.io/kube-arangodb
+      version: 1.2.26
+    - alias: common
+      name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.4.0
+    description: A Helm chart for Kubernetes
+    digest: b365ce696743a47bd9a60b68da335a00fde83cef67578eb4af3848b2b8d6b9c1
+    home: https://resoto.com
+    icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
+    keywords:
+    - resoto
+    - cloud
+    - automation
+    - aws
+    - gcp
+    - digitalocean
+    - k8s
+    maintainers:
+    - email: eng@some.engineering
+      name: aquamatthias
+    name: resoto
+    sources:
+    - https://github.com/someengineering/resoto
+    type: application
+    urls:
+    - https://github.com/someengineering/helm-charts/releases/download/resoto-0.8.1/resoto-0.8.1.tgz
+    version: 0.8.1
+  - apiVersion: v2
+    appVersion: 3.5.2
     created: "2023-06-19T10:51:22.185503882Z"
     dependencies:
     - condition: prometheus.enabled
@@ -1794,4 +1835,4 @@ entries:
     urls:
     - https://github.com/someengineering/helm-charts/releases/download/resoto-0.3.0/resoto-0.3.0.tgz
     version: 0.3.0
-generated: "2023-06-19T10:51:22.186068288Z"
+generated: "2023-06-19T13:23:37.379850292Z"

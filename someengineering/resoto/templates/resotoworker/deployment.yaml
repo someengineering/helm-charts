@@ -66,7 +66,7 @@ spec:
               port: https
               scheme: HTTPS
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resotoworker.resources | nindent 12 }}
     {{- if .Values.resotoworker.volumeMounts }}
           volumeMounts:
     {{- toYaml .Values.resotoworker.volumeMounts | nindent 12 }}
