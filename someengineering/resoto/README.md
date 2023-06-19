@@ -57,7 +57,7 @@ A Helm chart for Kubernetes
 | prometheus.server.retention | string | `"730d"` | Duration to keep time series data. |
 | psk | string | `""` | Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret resoto-psk. |
 | replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
-| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true"],"resources":null,"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
+| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true"],"resources":{},"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"}` | This defines the access to the graph database |
@@ -75,27 +75,27 @@ A Helm chart for Kubernetes
 | resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}]` | Ingress host configuration. |
 | resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true"]` | Use this section to override configuration values |
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
-| resotocore.resources | string | `nil` | Define resources requests and limits for this pod. |
+| resotocore.resources | object | `{}` | Define resources requests and limits for this pod. |
 | resotocore.service.port | int | `8900` | Port of the service. |
 | resotocore.service.type | string | `"ClusterIP"` | Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer. |
-| resotometrics | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotometrics","tag":""},"overrides":[],"resources":null,"serviceMonitor":{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}}` | Configuration for ResotoMetrics. |
+| resotometrics | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotometrics","tag":""},"overrides":[],"resources":{},"serviceMonitor":{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}}` | Configuration for ResotoMetrics. |
 | resotometrics.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotometrics.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotometrics.image.repository | string | `"somecr.io/someengineering/resotometrics"` | Image repository |
 | resotometrics.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | resotometrics.overrides | list | `[]` | Use this section to override configuration values |
-| resotometrics.resources | string | `nil` | Define resources requests and limits for this pod. |
+| resotometrics.resources | object | `{}` | Define resources requests and limits for this pod. |
 | resotometrics.serviceMonitor | object | `{"enabled":false,"interval":"30s","scrapeTimeout":"25s"}` | Prometheus serviceMonitor configuration |
 | resotometrics.serviceMonitor.enabled | bool | `false` | Whether a Prometheus serviceMonitor should be created |
 | resotometrics.serviceMonitor.interval | string | `"30s"` | Metrics scrape interval |
 | resotometrics.serviceMonitor.scrapeTimeout | string | `"25s"` | Metrics scrape timeout |
-| resotoworker | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotoworker","tag":""},"overrides":[],"resources":null,"volumeMounts":[],"volumes":[]}` | Configuration for ResotoWorker. |
+| resotoworker | object | `{"extraArgs":[],"extraEnv":[],"image":{"repository":"somecr.io/someengineering/resotoworker","tag":""},"overrides":[],"resources":{},"volumeMounts":[],"volumes":[]}` | Configuration for ResotoWorker. |
 | resotoworker.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotoworker.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotoworker.image.repository | string | `"somecr.io/someengineering/resotoworker"` | Image repository |
 | resotoworker.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | resotoworker.overrides | list | `[]` | Use this section to override configuration values |
-| resotoworker.resources | string | `nil` | Define resources requests and limits for this pod. |
+| resotoworker.resources | object | `{}` | Define resources requests and limits for this pod. |
 | resotoworker.volumeMounts | list | `[]` | Use this section to define volume mounts for the worker |
 | resotoworker.volumes | list | `[]` | Use this section to define volumes of the worker |
 | securityContext | object | `{}` | Configure the security context on the container level. |
