@@ -5,9 +5,7 @@
     "properties": {
         "resotocore": {
             "type": "object",
-            "required": [
-                "graphdb"
-            ],
+            "required": [],
             "properties": {
                 "service": {
                     "type": "object",
@@ -64,11 +62,7 @@
                 },
                 "graphdb": {
                     "type": "object",
-                    "required": [
-                        "server",
-                        "username",
-                        "database"
-                    ],
+                    "required": [],
                     "properties": {
                         "server": {
                             "type": "string",
@@ -270,4 +264,3 @@
         }
     }
 }
-                                                       
