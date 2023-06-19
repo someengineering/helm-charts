@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.7.10](https://img.shields.io/badge/Version-0.7.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.2](https://img.shields.io/badge/AppVersion-3.5.2-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.2](https://img.shields.io/badge/AppVersion-3.5.2-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -20,9 +20,9 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.24 |
-| https://charts.bitnami.com/bitnami | common(common) | 2.0.2 |
-| https://prometheus-community.github.io/helm-charts | prometheus | 18.1.0 |
+| https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.26 |
+| https://charts.bitnami.com/bitnami | common(common) | 2.4.0 |
+| https://prometheus-community.github.io/helm-charts | prometheus | 22.6.6 |
 
 ## Values
 
@@ -57,7 +57,7 @@ A Helm chart for Kubernetes
 | prometheus.server.retention | string | `"730d"` | Duration to keep time series data. |
 | psk | string | `""` | Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret resoto-psk. |
 | replicaCount | int | `1` | Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing. |
-| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
+| resotocore | object | `{"extraArgs":[],"extraEnv":[],"graphdb":{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"},"image":{"repository":"somecr.io/someengineering/resotocore","tag":""},"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}],"tls":[]},"overrides":["resotocore.runtime.start_collect_on_subscriber_connect=true"],"service":{"port":8900,"type":"ClusterIP"}}` | Configuration for ResotoCore. |
 | resotocore.extraArgs | list | `[]` | Use this section to define extra arguments |
 | resotocore.extraEnv | list | `[]` | Use this section to pass extra environment variables |
 | resotocore.graphdb | object | `{"database":"resoto","passwordSecret":{"key":"password","name":"arango-user"},"server":"http://graph-db-server:8529","username":"resoto"}` | This defines the access to the graph database |
@@ -69,10 +69,10 @@ A Helm chart for Kubernetes
 | resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
 | resotocore.image.repository | string | `"somecr.io/someengineering/resotocore"` | Image repository |
 | resotocore.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| resotocore.ingress.annotations | object | `{}` | All annotations for the ingress. |
+| resotocore.ingress.annotations | object | `{}` | All annotations for the ingress. The backend protocol is HTTPS and the ingress controller needs to be configured for that. nginx: see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol The annotation "nginx.ingress.kubernetes.io/backend-protocol" is set to "HTTPS" by default. traefik: see https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-service The annotation "traefik.ingress.kubernetes.io/service.serversscheme" is set to "https" by default. |
 | resotocore.ingress.className | string | `""` | The class of the ingress. If omitted, the configured default ingress class is used. |
 | resotocore.ingress.enabled | bool | `false` | In case you want to expose the service outside the k8s cluster, you can use an ingress. |
-| resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}]` | Ingress host configuration. |
+| resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}]` | Ingress host configuration. |
 | resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true"]` | Use this section to override configuration values |
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
 | resotocore.service.port | int | `8900` | Port of the service. |

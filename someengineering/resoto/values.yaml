@@ -45,16 +45,20 @@ resotocore:
     enabled: false
     # -- The class of the ingress. If omitted, the configured default ingress class is used.
     className: ""
-    # -- All annotations for the ingress.
+    # -- All annotations for the ingress. The backend protocol is HTTPS and the ingress controller needs to be configured for that.
+    # nginx: see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol
+    # The annotation "nginx.ingress.kubernetes.io/backend-protocol" is set to "HTTPS" by default.
+    # traefik: see https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-service
+    # The annotation "traefik.ingress.kubernetes.io/service.serversscheme" is set to "https" by default.
     annotations: {}
-      #  kubernetes.io/ingress.class: nginx
+    #  kubernetes.io/ingress.class: nginx
     #  kubernetes.io/tls-acme: "true"
     # -- Ingress host configuration.
     hosts:
       - host: chart-example.local
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
     tls: []
 
   # -- This defines the access to the graph database
