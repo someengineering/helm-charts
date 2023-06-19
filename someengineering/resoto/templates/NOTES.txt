@@ -1,6 +1,7 @@
-1. Get the application URL by running these commands:
+1. Get the application:
 {{- if .Values.resotocore.ingress.enabled }}
 {{- range $host := .Values.resotocore.ingress.hosts }}
+  Make sure you have DNS configured to point to the ingress controller external IP.
   {{- range .paths }}
   http{{ if $.Values.resotocore.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
   {{- end }}
@@ -23,4 +24,4 @@
   Note that for this to work, the port-forward must remain open.
 {{- end }}
 
-2. Once you have the application URL, you can use resotoshell to connect to it.
+2. Open the application URL in your web browser and continue the installation.
