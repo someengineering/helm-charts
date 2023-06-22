@@ -81,14 +81,17 @@ spec:
           - name: HELM_APP_VERSION
             value: {{ .Chart.AppVersion }}
           ports:
-            - name: api
+            - name: https-port
               containerPort: 8900
+              protocol: TCP
+            - name: http-port
+              containerPort: 8980
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /system/ready
-              port: api
-              scheme: HTTPS
+              port: http-port
+              scheme: HTTP
           resources:
             {{- toYaml .Values.resotocore.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

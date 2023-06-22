@@ -1,13 +1,13 @@
 {{- if .Values.resotocore.ingress.enabled -}}
 {{- $fullName := include "resoto.fullname" . -}}
-{{- $fullName = (printf "%s%s" $fullName  "-resotocore") }}
+{{- $fullName = (printf "%s%s%s" $fullName  "-resotocore" (ternary "" "-http" .Values.resotocore.ingress.useHttpsService)) }}
 {{- $svcPort := .Values.resotocore.service.port -}}
-{{- if contains "nginx" .Values.resotocore.ingress.className }}
+{{- if and (contains "nginx" .Values.resotocore.ingress.className) (.Values.resotocore.ingress.useHttpsService) }}
   {{- if not (or (hasKey .Values.resotocore.ingress.annotations "nginx.ingress.kubernetes.io/backend-protocol") (hasKey .Values.resotocore.ingress.annotations "nginx.ingress.kubernetes.io/ssl-passthrough")) }}
   {{- $_ := set .Values.resotocore.ingress.annotations "nginx.ingress.kubernetes.io/backend-protocol" "HTTPS"}}
   {{- end }}
 {{- end }}
-{{- if contains "traefik" .Values.resotocore.ingress.className }}
+{{- if and (contains "traefik" .Values.resotocore.ingress.className) (.Values.resotocore.ingress.useHttpsService) }}
   {{- if not (hasKey .Values.resotocore.ingress.annotations "traefik.ingress.kubernetes.io/service.serversscheme") }}
   {{- $_ := set .Values.resotocore.ingress.annotations "traefik.ingress.kubernetes.io/service.serversscheme" "https"}}
   {{- end }}
