@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.3](https://img.shields.io/badge/AppVersion-3.5.3-informational?style=flat-square)
+![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.3](https://img.shields.io/badge/AppVersion-3.5.3-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -69,11 +69,11 @@ A Helm chart for Kubernetes
 | resotocore.graphdb.username | string | `"resoto"` | The name of the user to connect |
 | resotocore.image.repository | string | `"somecr.io/someengineering/resotocore"` | Image repository |
 | resotocore.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| resotocore.ingress.annotations | object | `{}` | All annotations for the ingress. In case the ingress controller is configured to use HTTPS, the following annotations are defined by default: className =~ nginx: - see: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol - "nginx.ingress.kubernetes.io/backend-protocol" is set to "HTTPS" by default. className =~ traefik: - see https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-service - "traefik.ingress.kubernetes.io/service.serversscheme" is set to "https" by default. |
+| resotocore.ingress.annotations | object | `{}` | All annotations for the ingress. In case the ingress controller is configured to use HTTPS, the following annotations are defined by default: className =~ nginx: - see: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol - "nginx.ingress.kubernetes.io/backend-protocol" is set to "HTTPS" by default. |
 | resotocore.ingress.className | string | `""` | The class of the ingress. If omitted, the configured default ingress class is used. |
 | resotocore.ingress.enabled | bool | `false` | In case you want to expose the service outside the k8s cluster, you can use an ingress. |
 | resotocore.ingress.hosts | list | `[{"host":"chart-example.local","paths":[{"path":"/","pathType":"Prefix"}]}]` | Ingress host configuration. |
-| resotocore.ingress.useHttpsService | bool | `false` | Configure ingress to talk to the service via HTTPS. If enabled, the ingress controller needs to be configured for that. |
+| resotocore.ingress.useHttpsService | bool | `false` | Configure ingress to talk to the service via HTTPS. If enabled, the ingress controller needs to be configured for that. Turning it on without additional user configuration, will most likely render your ingress unusable! Since this configuration is specific for the ingress controller implementation, it can not be provided by this chart. Please refer to the documentation of your ingress controller for further information. |
 | resotocore.overrides | list | `["resotocore.runtime.start_collect_on_subscriber_connect=true"]` | Use this section to override configuration values |
 | resotocore.overrides[0] | string | `"resotocore.runtime.start_collect_on_subscriber_connect=true"` | start a collect cycle automatically when the first collector is connected |
 | resotocore.resources | object | `{}` | Define resources requests and limits for this pod. |
