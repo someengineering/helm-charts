@@ -7,11 +7,6 @@
   {{- $_ := set .Values.resotocore.ingress.annotations "nginx.ingress.kubernetes.io/backend-protocol" "HTTPS"}}
   {{- end }}
 {{- end }}
-{{- if and (contains "traefik" .Values.resotocore.ingress.className) (.Values.resotocore.ingress.useHttpsService) }}
-  {{- if not (hasKey .Values.resotocore.ingress.annotations "traefik.ingress.kubernetes.io/service.serversscheme") }}
-  {{- $_ := set .Values.resotocore.ingress.annotations "traefik.ingress.kubernetes.io/service.serversscheme" "https"}}
-  {{- end }}
-{{- end }}
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
