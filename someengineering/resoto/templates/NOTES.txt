@@ -36,7 +36,7 @@ Execute the following lines on your command line:
 
 # --------------------------- snip ---------------------------
 echo "Resoto is now accessible at http://127.0.0.1:8900"
-kubectl --namespace {{ .Release.Namespace }} port-forward services/{{ include "resoto.fullname" . }}-resotocore-http 8900:{{ .Values.resotocore.service.port }}}
+kubectl --namespace {{ .Release.Namespace }} port-forward services/{{ include "resoto.fullname" . }}-resotocore-http 8900:{{ .Values.resotocore.service.port }}
 # --------------------------- snap ---------------------------
 
 Note that for this to work, the port-forward must remain open.
