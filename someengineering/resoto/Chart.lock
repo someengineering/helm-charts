@@ -1,12 +1,12 @@
 dependencies:
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
-  version: 22.6.6
+  version: 18.4.0
 - name: kube-arangodb
   repository: https://arangodb.github.io/kube-arangodb
   version: 1.2.26
 - name: common
   repository: https://charts.bitnami.com/bitnami
   version: 2.4.0
-digest: sha256:76e6425d4bf6007046976352b3181671675c816fe73ea97be5f79a6ad3116cae
-generated: "2023-07-24T22:42:01.743093125Z"
+digest: sha256:39a1b700e8e9d95dbc5bc1f823b13af0a340a1531498c5c80a34a3a29cd4ea2d
+generated: "2023-09-05T07:11:50.039148567Z"

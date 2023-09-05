@@ -1,6 +1,6 @@
 # resoto
 
-![Version: 0.9.5](https://img.shields.io/badge/Version-0.9.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.6.4](https://img.shields.io/badge/AppVersion-3.6.4-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.6.5](https://img.shields.io/badge/AppVersion-3.6.5-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -22,7 +22,7 @@ A Helm chart for Kubernetes
 |------------|------|---------|
 | https://arangodb.github.io/kube-arangodb | arangodb(kube-arangodb) | 1.2.26 |
 | https://charts.bitnami.com/bitnami | common(common) | 2.4.0 |
-| https://prometheus-community.github.io/helm-charts | prometheus | 22.6.6 |
+| https://prometheus-community.github.io/helm-charts | prometheus | 18.4.0 |
 
 ## Values
 

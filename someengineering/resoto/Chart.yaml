@@ -2,8 +2,8 @@ apiVersion: v2
 name: resoto
 description: A Helm chart for Kubernetes
 type: application
-version: 0.9.5
-appVersion: "3.6.4"
+version: 0.10.0
+appVersion: "3.6.5"
 maintainers:
   - name: aquamatthias
     email: "eng@some.engineering"
@@ -11,7 +11,7 @@ icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
 home: https://resoto.com
 dependencies:
   - name: prometheus
-    version: 22.6.6
+    version: 18.4.0
     repository: https://prometheus-community.github.io/helm-charts
     condition: prometheus.enabled
   - name: kube-arangodb
