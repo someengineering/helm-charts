@@ -10,9 +10,9 @@ spec:
   {{. | toYaml | nindent 2}}
   {{- end}}
   {{ .Values.arangodb.operator.deployment.mode | lower}}:
-    resources:
-      requests:
-        storage: {{ .Values.arangodb.persistentVolumeSize }}
+    volumeClaimTemplate:
+      spec: # https://docs.arangodb.com/3.11/deploy/kubernetes/deployment-resource-reference/#specgroupvolumeclaimtemplatespec-persistentvolumeclaimspec
+        {{ toYaml .Values.arangodb.persistentVolumeClaimSpec | nindent 8 }}
   externalAccess:
     type: {{ .Values.arangodb.operator.deployment.externalAccessType }}
   tls:

@@ -7,7 +7,13 @@ arangodb:
   # -- The version of ArangoDB to use.
   version: "3.10.4"
   # -- The size of the volume for the database data.
-  persistentVolumeSize: "50Gi"
+  persistentVolumeClaimSpec: 
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+    # storageClassName: default
 
   # -- See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator for a list of possible configuration values.
   operator:
