@@ -30,7 +30,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.6.0
         with:
           charts_dir: someengineering
-          charts_repo_url: https://helm.some.engineering
         env:
           CR_TOKEN: ${{ secrets.SOME_CI_PAT }}
 
