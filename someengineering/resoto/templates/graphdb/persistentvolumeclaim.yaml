@@ -5,10 +5,6 @@ metadata:
   finalizers:
   - kubernetes.io/pvc-protection
   name: graphdb-server-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{.Values.arangodb.persistentVolumeSize}}
+spec: 
+  {{ toYaml .Values.arangodb.persistentVolumeClaimSpec | nindent 2 }}
 {{- end }}
