@@ -9,10 +9,12 @@ spec:
   {{- with .Values.arangodb.operator.deployment.spec }}
   {{. | toYaml | nindent 2}}
   {{- end}}
+  {{- if not (hasKey .Values.arangodb.operator.deployment.spec (.Values.arangodb.operator.deployment.mode | lower)) }}
   {{ .Values.arangodb.operator.deployment.mode | lower}}:
     volumeClaimTemplate:
       spec: # https://docs.arangodb.com/3.11/deploy/kubernetes/deployment-resource-reference/#specgroupvolumeclaimtemplatespec-persistentvolumeclaimspec
         {{ toYaml .Values.arangodb.persistentVolumeClaimSpec | nindent 8 }}
+  {{- end }}
   externalAccess:
     type: {{ .Values.arangodb.operator.deployment.externalAccessType }}
   tls:
