@@ -46,6 +46,10 @@ resotocore:
     # -- Port of the service to expose.
     # Two services will be created: resoto-resotocore:8900 (HTTPS) and resoto-resotocore-http:8900 (HTTP)
     port: 8900
+    http:
+      annotations: {}
+    https:
+      annotations: {}
 
   ingress:
     # -- In case you want to expose the service outside the k8s cluster, you can use an ingress.
