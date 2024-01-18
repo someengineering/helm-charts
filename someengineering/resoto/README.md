@@ -2,15 +2,12 @@
 
 ![Version: 0.10.4](https://img.shields.io/badge/Version-0.10.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.8.0](https://img.shields.io/badge/AppVersion-3.8.0-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A Helm chart for installing Resoto in Kubernetes.
+
+**Important**: This project is currently not being maintained.
+If you are interested in taking over as a maintainer, please reach out to us at https://resoto.com/.
 
 **Homepage:** <https://resoto.com>
-
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| aquamatthias | <eng@some.engineering> |  |
 
 ## Source Code
 

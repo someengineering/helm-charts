@@ -1,12 +1,14 @@
 apiVersion: v2
 name: resoto
-description: A Helm chart for Kubernetes
+description: |
+  A Helm chart for installing Resoto in Kubernetes.
+  
+  **Important**: This project is currently not being maintained. 
+  If you are interested in taking over as a maintainer, please reach out to us at https://resoto.com/.
 type: application
 version: 0.10.4
 appVersion: "3.8.0"
-maintainers:
-  - name: aquamatthias
-    email: "eng@some.engineering"
+maintainers: []
 icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
 home: https://resoto.com
 dependencies:
