@@ -26,7 +26,7 @@ jobs:
         run: |
           NO_START_KIND=1 CI_ENABLED=1 IMAGE_TAG=edge bash -x ./scripts/setup-kind.sh
           # make sure we get the example collector in a reasonable time.
-          timeout 10m /bin/bash -c "until echo 'config set resoto.worker resotoworker.collector=[example]; workflows run collect; kind' | kubectl exec -i deploy/resoto-resotocore -- resh --stdin | grep example; do sleep 1; done"
+          timeout 10m /bin/bash -c "until echo 'config set fix.worker fixworker.collector=[example]; workflows run collect; kind' | kubectl exec -i deploy/fixinventory-fixcore -- resh --stdin | grep example; do sleep 1; done"
       - name: Debug info on failure
         if: ${{ failure() }}
         run: |
@@ -35,8 +35,8 @@ jobs:
           echo "Cluster state:"
           kubectl describe all
           echo "Core logs:"
-          kubectl logs deploy/resoto-resotocore
+          kubectl logs deploy/fixinventory-fixcore
           echo "Worker logs:"
-          kubectl logs deploy/resoto-resotoworker
+          kubectl logs deploy/fixinventory-fixworker
           echo "Metrics logs:"
-          kubectl logs deploy/resoto-resotometrics
+          kubectl logs deploy/fixinventory-fixmetrics
