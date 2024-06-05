@@ -1,0 +1,266 @@
+# -- Default values for Fix Inventory.
+# -- This is a YAML-formatted file.
+# -- Declare variables to be passed into your templates.
+
+# -- Install ArangoDB operator as dependency.
+arangodb:
+  # -- The version of ArangoDB to use.
+  version: "3.10.4"
+  # -- The size of the volume for the database data.
+  persistentVolumeClaimSpec: 
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+    # storageClassName: default
+
+  # -- See: https://www.arangodb.com/docs/stable/deployment-kubernetes-helm.html#configurable-values-for-arangodb-kubernetes-operator for a list of possible configuration values.
+  operator:
+    # -- The ArangoDB operator is helpful for more complex deployments. Default is disabled, while a single instance database deployment is performed.
+    enabled: false
+    # -- Replication count for Operator deployment.
+    replicaCount: 1
+    # -- Defines the ArangoDB deployment and database.
+    deployment:
+      # -- The ArangoDB deployment mode. Can be either "Cluster", "ActiveFailover" or "Single". https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specmode-string
+      mode: Single
+      # -- Should the database externally accessible. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specexternalaccesstype-string
+      externalAccessType: "None"
+      # -- Secret name that holds the ArangoDB certificate authority.
+      tlsCASecretName: "None"
+      # -- The arangodb specification. https://www.arangodb.com/docs/stable/deployment-kubernetes-deployment-resource.html#specification-reference
+      spec: {}
+
+
+# -- Configuration for Fix Core.
+fixcore:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/fixcore
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  service:
+    # -- Type of service. ClusterIP is only reachable within the cluster. If you want to make your installation available outside the cluster, consider setting up an ingress or use type LoadBalancer.
+    type: ClusterIP
+    # -- Port of the service to expose.
+    # Two services will be created: fixinventory-fixcore:8900 (HTTPS) and fixinventory-fixcore-http:8900 (HTTP)
+    port: 8900
+
+  ingress:
+    # -- In case you want to expose the service outside the k8s cluster, you can use an ingress.
+    enabled: false
+    # -- Configure ingress to talk to the service via HTTPS.
+    # If enabled, the ingress controller needs to be configured for that.
+    # Turning it on without additional user configuration, will most likely render your ingress unusable!
+    # Since this configuration is specific for the ingress controller implementation, it can not be provided by this chart.
+    # Please refer to the documentation of your ingress controller for further information.
+    useHttpsService: false
+    # -- The class of the ingress. If omitted, the configured default ingress class is used.
+    className: ""
+    # -- All annotations for the ingress.
+    # In case the ingress controller is configured to use HTTPS, the following annotations are defined by default:
+    # className =~ nginx:
+    # - see: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol
+    # - "nginx.ingress.kubernetes.io/backend-protocol" is set to "HTTPS" by default.
+    annotations: {}
+    #  kubernetes.io/ingress.class: nginx
+    #  kubernetes.io/tls-acme: "true"
+    # -- Ingress host configuration.
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+
+  # -- This defines the access to the graph database
+  graphdb:
+    # -- The complete url of the graph database
+    server: http://graph-db-server:8529
+    # -- The name of the database to use
+    database: fix
+    # -- The name of the user to connect
+    username: fix
+    # -- The secret to get the password from
+    passwordSecret:
+      # -- The secret name to get the password from
+      name: arango-user
+      # -- The secret key to get the password from
+      key: password
+
+  # -- Use this section to override configuration values
+  overrides:
+    # -- start a collect cycle automatically when the first collector is connected
+    - fixcore.runtime.start_collect_on_subscriber_connect=true
+
+  # -- Use this section to define extra arguments
+  extraArgs: []
+
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+
+  # -- Define resources requests and limits for this pod.
+  resources: {}
+  #  limits:
+  #   cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+# -- Configuration for Fix Worker.
+fixworker:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/fixworker
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Use this section to override configuration values
+  overrides: []
+  # -- Use this section to define extra arguments
+  extraArgs: []
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+  # -- Use this section to define volumes of the worker
+  volumes: []
+  # -- Use this section to define volume mounts for the worker
+  volumeMounts: []
+  # -- Define resources requests and limits for this pod.
+  resources: {}
+  #  limits:
+  #   cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+
+
+# -- Configuration for Fix Metrics.
+fixmetrics:
+  image:
+    # -- Image repository
+    repository: somecr.io/someengineering/fixmetrics
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  # -- Use this section to override configuration values
+  overrides: []
+  # -- Use this section to define extra arguments
+  extraArgs: []
+  # -- Use this section to pass extra environment variables
+  extraEnv: []
+  # -- Define resources requests and limits for this pod.
+  resources: {}
+  #  limits:
+  #   cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+  # -- Prometheus serviceMonitor configuration
+  serviceMonitor:
+    # -- Whether a Prometheus serviceMonitor should be created
+    enabled: false
+    # -- Metrics scrape interval
+    interval: 30s
+    # -- Metrics scrape timeout
+    scrapeTimeout: 25s
+
+# -- Defines the private shared key that is used to secure the communication between the components. If the value is not set, a random key is generated. You can get the psk from the secret fixinventory-psk.
+psk: ""
+
+# -- Defines the number of workers to run in parallel. Only increase this number, if you know what you are doing.
+replicaCount: 1
+# -- In case you use a custom repository which needs secrets.
+imagePullSecrets: []
+# -- In case you want to override the name of this chart.
+nameOverride: ""
+# -- In case you want to override the generated fully qualified application name.
+fullnameOverride: ""
+# -- The image pull policy
+imagePullPolicy: "IfNotPresent"
+
+# -- Define and configure a service account that used by Fix Inventory.
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Configure annotations for all pods.
+podAnnotations: {}
+
+# -- Configure the security context on the pod level.
+podSecurityContext: {}
+#  fsGroup: 2000
+
+# -- Configure the security context on the container level.
+securityContext: {}
+  #  capabilities:
+  #    drop:
+  #    - ALL
+  #  readOnlyRootFilesystem: true
+  #  runAsNonRoot: true
+#  runAsUser: 1000
+
+# -- Configure node selectors for all pods.
+nodeSelector: {}
+
+# -- Configure toleration's for all pods.
+tolerations: []
+
+# -- Configure node affinity for all pods.
+affinity: {}
+
+# -- Image tag used for all Fix Inventory components.
+image:
+  # -- The specific component version always takes precedence.
+  tag: ""
+
+# -- Configure the prometheus component. Type helm show values prometheus-community/prometheus for a list of possible configuration values.
+prometheus:
+  # -- You can disable the Prometheus dependency by setting this to false.
+  enabled: true
+  # -- Define attributes for the Prometheus service.
+  server:
+    # -- Duration to keep time series data.
+    retention: "730d"
+    # -- Define the persistent volume properties.
+    persistentVolume:
+      # -- Size of the persistent volume.
+      size: 50Gi
+  # @ignored - disable alertmanager coming from the chart.
+  alertmanager:
+    enabled: false
+    serviceAccount:
+      create: false
+    persistence:
+      enabled: false
+  # @ignored - disable kube state metrics coming from the chart.
+  kubeStateMetrics:
+    enabled: false
+  # @ignored - disable node exporter coming from the chart.
+  prometheus-node-exporter:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - disable push gateway coming from the chart.
+  prometheus-pushgateway:
+    enabled: false
+    serviceAccount:
+      create: false
+  # @ignored - redefine scrape configs: only scrape fixmetrics.
+  serverFiles:
+    prometheus.yml:
+      scrape_configs:
+        - job_name: "fixmetrics"
+          scheme: https
+          scrape_interval: 15m
+          tls_config:
+            insecure_skip_verify: true
+          static_configs:
+            - targets: [ "fixinventory-fixmetrics:9955" ]

@@ -1,0 +1,161 @@
+{{- if .Values.arangodb.operator.enabled | not }}
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-graphdb
+  labels:
+    fixinventory: graphdb
+    {{- include "fixinventory.labels" . | nindent 4 }}
+spec:
+  # This is a single instance deployment. To avoid split brain scenarios never increase this number!
+  replicas: 1
+  selector:
+    matchLabels:
+      fixinventory: graphdb
+      {{- include "fixinventory.selectorLabels" . | nindent 6 }}
+  # Make sure the old instance is stopped before starting the new one
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        fixinventory: graphdb
+        {{- include "fixinventory.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: server
+          command:
+            - /usr/sbin/arangod
+            - --database.directory=/data
+            - --foxx.queues=true
+            - --log.level=INFO
+            - --log.output=+
+            - --server.authentication=true
+            - --server.endpoint=tcp://[::]:8529
+            - --server.statistics=true
+            - --server.storage-engine=rocksdb
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+          image: "arangodb/arangodb:{{ .Values.arangodb.version }}"
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /_admin/server/availability
+              port: server
+              scheme: HTTP
+            failureThreshold: 10
+            initialDelaySeconds: 900
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /_admin/server/availability
+              port: server
+              scheme: HTTP
+            failureThreshold: 10
+            initialDelaySeconds: 2
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 2
+          ports:
+            - containerPort: 8529
+              name: server
+              protocol: TCP
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /data
+              name: arangod-data
+            - mountPath: /lifecycle/tools
+              name: lifecycle
+            - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              name: kube-api-access
+              readOnly: true
+
+      initContainers:
+        - name: upgrade-database
+          command:
+            - /usr/sbin/arangod
+            - --database.directory=/data
+            - --database.auto-upgrade
+          image: "arangodb/arangodb:{{ .Values.arangodb.version }}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /data
+              name: arangod-data
+
+      dnsPolicy: ClusterFirst
+      hostname: fixinventory-graphdb
+      enableServiceLinks: true
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      tolerations:
+        - effect: NoExecute
+          key: node.kubernetes.io/not-ready
+          operator: Exists
+        - effect: NoExecute
+          key: node.kubernetes.io/unreachable
+          operator: Exists
+      volumes:
+        - name: arangod-data
+          persistentVolumeClaim:
+            claimName: graphdb-server-pvc
+        - emptyDir: {}
+          name: lifecycle
+        - name: kube-api-access
+          projected:
+            defaultMode: 420
+            sources:
+              - serviceAccountToken:
+                  expirationSeconds: 3607
+                  path: token
+              - configMap:
+                  items:
+                    - key: ca.crt
+                      path: ca.crt
+                  name: kube-root-ca.crt
+              - downwardAPI:
+                  items:
+                    - fieldRef:
+                        apiVersion: v1
+                        fieldPath: metadata.namespace
+                      path: namespace
+{{- end }}

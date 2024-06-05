@@ -1,0 +1,21 @@
+{{- if .Values.fixmetrics.serviceMonitor.enabled }}
+apiVersion: "monitoring.coreos.com/v1"
+kind: ServiceMonitor
+metadata:
+  labels:
+    fixinventory: metrics
+    {{- include "fixinventory.labels" . | nindent 4 }}
+  name: {{ include "fixinventory.fullname" . }}-fixmetrics
+spec:
+  selector:
+    matchLabels:
+      fixinventory: metrics
+      {{- include "fixinventory.selectorLabels" . | nindent 6 }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace | quote }}
+  endpoints:
+  - port: metrics
+    interval: {{ .Values.fixmetrics.serviceMonitor.interval }}
+    scrapeTimeout: {{ .Values.fixmetrics.serviceMonitor.scrapeTimeout }}
+{{- end }}
