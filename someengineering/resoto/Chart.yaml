@@ -6,7 +6,7 @@ description: |
   **Important**: This project is currently not being maintained. 
   If you are interested in taking over as a maintainer, please reach out to us at https://resoto.com/.
 type: application
-version: 0.10.4
+version: 0.10.5
 appVersion: "3.8.0"
 maintainers: []
 icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg

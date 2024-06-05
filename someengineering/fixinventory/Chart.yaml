@@ -3,7 +3,7 @@ name: fixinventory
 description: |
   A Helm chart for installing Fix Inventory in Kubernetes.
 type: application
-version: 0.10.5
+version: 0.10.6
 appVersion: "4.0.5"
 maintainers: []
 icon: https://cdn.fix.security/assets/fix-logos/fix-logo.svg
