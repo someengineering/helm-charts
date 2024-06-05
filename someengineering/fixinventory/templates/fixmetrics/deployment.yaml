@@ -1,0 +1,81 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-fixmetrics
+  labels:
+    fixinventory: metrics
+    {{- include "fixinventory.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fixinventory: metrics
+      {{- include "fixinventory.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        fixinventory: metrics
+        {{- include "fixinventory.selectorLabels" . | nindent 8 }}
+    spec:
+      enableServiceLinks: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "fixinventory.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.fixmetrics.image.repository }}:{{ .Values.fixmetrics.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          args:
+          - --fixcore-uri
+          - https://{{ include "fixinventory.fullname" . }}-fixcore:8900
+          {{- if .Values.fixmetrics.overrides }}
+          - --override
+          {{- toYaml .Values.fixmetrics.overrides | nindent 10 }}
+          {{- end }}
+          {{- if .Values.fixmetrics.extraArgs }}
+          {{- toYaml .Values.fixmetrics.extraArgs | nindent 10 }}
+          {{- end }}
+          env:
+            - name: PSK
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "fixinventory.fullname" . }}-psk
+                  key: "psk"
+          {{- if .Values.fixmetrics.extraEnv }}
+          {{- toYaml .Values.fixmetrics.extraEnv | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: https
+              containerPort: 9955
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: https
+              scheme: HTTPS
+          resources:
+            {{- toYaml .Values.fixmetrics.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

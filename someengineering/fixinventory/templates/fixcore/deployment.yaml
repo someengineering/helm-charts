@@ -1,0 +1,118 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-fixcore
+  labels:
+    fixinventory: core
+    {{- include "fixinventory.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      fixinventory: core
+      {{- include "fixinventory.selectorLabels" . | nindent 6 }}
+  # We can remove/change the strategy when the core no longer assumes it is a singleton.
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        fixinventory: core
+        {{- include "fixinventory.selectorLabels" . | nindent 8 }}
+    spec:
+      enableServiceLinks: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "fixinventory.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.fixcore.image.repository }}:{{ .Values.fixcore.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          args:
+          - --graphdb-server
+          - {{ .Values.fixcore.graphdb.server | quote }}
+          - --graphdb-database
+          - {{ .Values.fixcore.graphdb.database | quote }}
+          - --graphdb-username
+          - {{ .Values.fixcore.graphdb.username | quote }}
+          - --override
+          # add the host name of the fixcore service to the certificate
+          - fixcore.api.host_certificate.san_dns_names={{ include "fixinventory.fullname" . }}-fixcore
+          # if prometheus is enabled, define the tsdb url
+          {{- if .Values.prometheus.enabled }}
+          - fixcore.api.tsdb_proxy_url=http://fixinventory-prometheus-server/
+          {{- end }}
+          # bind to all available network interfaces
+          - fixcore.api.web_hosts=0.0.0.0
+          {{- if .Values.fixcore.overrides }}
+          {{- toYaml .Values.fixcore.overrides | nindent 10 }}
+          {{- end }}
+          {{- if .Values.fixcore.extraArgs }}
+          {{- toYaml .Values.fixcore.extraArgs | nindent 10 }}
+          {{- end }}
+          env:
+          {{- if .Values.fixcore.graphdb.passwordSecret }}
+          - name: FIXCORE_GRAPHDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.fixcore.graphdb.passwordSecret.name }}
+                key: {{ .Values.fixcore.graphdb.passwordSecret.key }}
+          {{- end }}
+          - name: PSK
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "fixinventory.fullname" . }}-psk
+                key: "psk"
+          {{- if .Values.fixcore.extraEnv }}
+          {{- toYaml .Values.fixcore.extraEnv | nindent 10 }}
+          {{- end }}
+          - name: HELM_VERSION
+            value: {{ .Chart.Version }}
+          - name: HELM_APP_VERSION
+            value: {{ .Chart.AppVersion }}
+          ports:
+            - name: https-port
+              containerPort: 8900
+              protocol: TCP
+            - name: http-port
+              containerPort: 8980
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /system/ready
+              port: http-port
+              scheme: HTTP
+          resources:
+            {{- toYaml .Values.fixcore.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            # prefer to schedule the core on the same node as the graphdb
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchExpressions:
+                    - key: arango_deployment
+                      operator: Exists
+        {{- with .Values.affinity }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

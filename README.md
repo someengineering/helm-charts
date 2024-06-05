@@ -17,10 +17,10 @@ $ helm repo add someengineering https://helm.some.engineering
 
 ## Charts
 
-### [`resoto`](./someengineering/resoto/README.md)
+### [`fixinventory`](./someengineering/fixinventory/README.md)
 
-- [Chart documentation](./someengineering/resoto/README.md)
-- [Installation instructions](https://resoto.com/docs/getting-started/install-resoto/kubernetes)
+- [Chart documentation](./someengineering/fixinventory/README.md)
+- [Installation instructions](https://inventory.fix.security)
 
 ## Contact
 

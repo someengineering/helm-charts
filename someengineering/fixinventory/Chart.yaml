@@ -1,0 +1,38 @@
+apiVersion: v2
+name: fixinventory
+description: |
+  A Helm chart for installing Fix Inventory in Kubernetes.
+type: application
+version: 0.10.5
+appVersion: "4.0.5"
+maintainers: []
+icon: https://cdn.fix.security/assets/fix-logos/fix-logo.svg
+home: https://inventory.fix.security
+dependencies:
+  - name: prometheus
+    version: 18.1.0
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled
+  - name: kube-arangodb
+    alias: arangodb
+    repository: https://arangodb.github.io/kube-arangodb
+    condition: arangodb.operator.enabled
+    version: 1.2.26
+  - name: common
+    alias: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.4.0
+sources:
+  - https://github.com/someengineering/fixinventory
+keywords:
+  - fix
+  - fixinventory
+  - cloud
+  - automation
+  - aws
+  - gcp
+  - azure
+  - digitalocean
+  - k8s

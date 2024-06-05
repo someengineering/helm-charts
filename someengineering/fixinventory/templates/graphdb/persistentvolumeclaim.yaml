@@ -1,0 +1,10 @@
+{{- if .Values.arangodb.operator.enabled | not }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  - kubernetes.io/pvc-protection
+  name: graphdb-server-pvc
+spec: 
+  {{ toYaml .Values.arangodb.persistentVolumeClaimSpec | nindent 2 }}
+{{- end }}

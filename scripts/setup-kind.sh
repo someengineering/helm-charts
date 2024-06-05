@@ -14,17 +14,17 @@ fi
 
 if [ -z "${CI_ENABLED}" ]; then
   helm repo add someengineering https://someengineering.github.io/helm-charts
-  helm install resoto someengineering/resoto --set image.tag=$IMAGE_TAG -f - <<EOF
-resotocore:
+  helm install fixinventory someengineering/fixinventory --set image.tag=$IMAGE_TAG -f - <<EOF
+fixcore:
   extraArgs: ["--analytics-opt-out"]
 prometheus:
   enabled: false
 EOF
 else
   DIR="$(dirname "$(realpath "$0")")"
-  helm dependency update "$DIR/../someengineering/resoto"
-  helm upgrade -i resoto "$DIR/../someengineering/resoto" --set image.tag=$IMAGE_TAG -f - <<EOF
-resotocore:
+  helm dependency update "$DIR/../someengineering/fixinventory"
+  helm upgrade -i fixinventory "$DIR/../someengineering/fixinventory" --set image.tag=$IMAGE_TAG -f - <<EOF
+fixcore:
   extraArgs: ["--analytics-opt-out"]
 prometheus:
   enabled: false
@@ -32,12 +32,12 @@ EOF
 fi
 
 # wait for it to be ready
-kubectl rollout status deploy/resoto-resotocore --timeout=600s
-kubectl rollout status deploy/resoto-resotoworker --timeout=300s
-kubectl rollout status deploy/resoto-resotometrics --timeout=300s
+kubectl rollout status deploy/fixinventory-fixcore --timeout=600s
+kubectl rollout status deploy/fixinventory-fixworker --timeout=300s
+kubectl rollout status deploy/fixinventory-fixmetrics --timeout=300s
 
 # see an example query!
 echo 'Setup done. You can now run queries. For example:'
-echo 'kubectl exec -i deploy/resoto-resotocore -- resh --stdin <<EOF'
+echo 'kubectl exec -i deploy/fixinventory-fixcore -- resh --stdin <<EOF'
 echo 'query is(resource) | count reported.kind'
 echo 'EOF'

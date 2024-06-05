@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-fixcore-http
+  labels:
+    fixinventory: core
+    {{- include "fixinventory.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.fixcore.service.type }}
+  ports:
+    - port: {{ .Values.fixcore.service.port }}
+      targetPort: http-port
+      protocol: TCP
+      name: http
+  selector:
+    fixinventory: core
+    {{- include "fixinventory.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-fixcore
+  labels:
+    fixinventory: core
+    {{- include "fixinventory.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.fixcore.service.type }}
+  ports:
+    - port: {{ .Values.fixcore.service.port }}
+      targetPort: https-port
+      protocol: TCP
+      name: http
+  selector:
+    fixinventory: core
+    {{- include "fixinventory.selectorLabels" . | nindent 4 }}
