@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fixinventory.fullname" . }}-fixmetrics
+  labels:
+    fixinventory: metrics
+    {{- include "fixinventory.labels" . | nindent 4 }}
+  {{- if not .Values.fixmetrics.serviceMonitor.enabled }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/metrics'
+    prometheus.io/port: '9955'
+    prometheus.io/scheme: 'https'
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9955
+      protocol: TCP
+      name: metrics
+  selector:
+    fixinventory: metrics
+    {{- include "fixinventory.selectorLabels" . | nindent 4 }}

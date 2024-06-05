@@ -1,16 +1,13 @@
 apiVersion: v2
-name: resoto
+name: fixinventory
 description: |
-  A Helm chart for installing Resoto in Kubernetes.
-  
-  **Important**: This project is currently not being maintained. 
-  If you are interested in taking over as a maintainer, please reach out to us at https://resoto.com/.
+  A Helm chart for installing Fix Inventory in Kubernetes.
 type: application
-version: 0.10.5
-appVersion: "3.8.0"
+version: 0.10.6
+appVersion: "4.0.5"
 maintainers: []
-icon: https://cdn.some.engineering/assets/resoto-logos/resoto-logo.svg
-home: https://resoto.com
+icon: https://cdn.fix.security/assets/fix-logos/fix-logo.svg
+home: https://inventory.fix.security
 dependencies:
   - name: prometheus
     version: 18.1.0
@@ -28,12 +25,14 @@ dependencies:
       - bitnami-common
     version: 2.4.0
 sources:
-  - https://github.com/someengineering/resoto
+  - https://github.com/someengineering/fixinventory
 keywords:
-  - resoto
+  - fix
+  - fixinventory
   - cloud
   - automation
   - aws
   - gcp
+  - azure
   - digitalocean
   - k8s

@@ -1,0 +1,20 @@
+{{- if .Values.arangodb.operator.enabled }}
+apiVersion: "database.arangodb.com/v1"
+kind: "ArangoDeployment"
+metadata:
+  name: "graph-db-server"
+spec:
+  image: "arangodb/arangodb:{{ .Values.arangodb.version }}"
+  mode: {{ .Values.arangodb.operator.deployment.mode }}
+  {{- with .Values.arangodb.operator.deployment.spec }}
+  {{. | toYaml | nindent 2}}
+  {{- end}}
+  {{ .Values.arangodb.operator.deployment.mode | lower}}:
+    volumeClaimTemplate:
+      spec: # https://docs.arangodb.com/3.11/deploy/kubernetes/deployment-resource-reference/#specgroupvolumeclaimtemplatespec-persistentvolumeclaimspec
+        {{ toYaml .Values.arangodb.persistentVolumeClaimSpec | nindent 8 }}
+  externalAccess:
+    type: {{ .Values.arangodb.operator.deployment.externalAccessType }}
+  tls:
+    caSecretName: {{ .Values.arangodb.operator.deployment.tlsCASecretName }}
+{{- end }}

@@ -1,0 +1,56 @@
+{{- if .Values.fixcore.ingress.enabled -}}
+{{- $fullName := include "fixinventory.fullname" . -}}
+{{- $fullName = (printf "%s%s%s" $fullName  "-fixcore" (ternary "" "-http" .Values.fixcore.ingress.useHttpsService)) }}
+{{- $svcPort := .Values.fixcore.service.port -}}
+{{- if and (contains "nginx" .Values.fixcore.ingress.className) (.Values.fixcore.ingress.useHttpsService) }}
+  {{- if not (or (hasKey .Values.fixcore.ingress.annotations "nginx.ingress.kubernetes.io/backend-protocol") (hasKey .Values.fixcore.ingress.annotations "nginx.ingress.kubernetes.io/ssl-passthrough")) }}
+  {{- $_ := set .Values.fixcore.ingress.annotations "nginx.ingress.kubernetes.io/backend-protocol" "HTTPS"}}
+  {{- end }}
+{{- end }}
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "fixinventory.labels" . | nindent 4 }}
+  {{- with .Values.fixcore.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and .Values.fixcore.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.fixcore.ingress.className }}
+  {{- end }}
+  {{- if .Values.fixcore.ingress.tls }}
+  tls:
+    {{- range .Values.fixcore.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.fixcore.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if include "common.ingress.supportsPathType" $ }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+            {{- end }}
+          {{- end }}
+    {{- end }}
+{{- end }}

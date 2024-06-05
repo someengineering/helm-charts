@@ -1,0 +1,15 @@
+{{- if .Values.arangodb.operator.enabled | not }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: graph-db-server
+spec:
+  ports:
+    - name: server
+      port: 8529
+      protocol: TCP
+      targetPort: 8529
+  selector:
+    fixinventory: graphdb
+    {{- include "fixinventory.selectorLabels" . | nindent 4 }}
+{{- end }}
