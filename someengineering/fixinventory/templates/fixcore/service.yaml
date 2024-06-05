@@ -29,7 +29,7 @@ spec:
     - port: {{ .Values.fixcore.service.port }}
       targetPort: https-port
       protocol: TCP
-      name: http
+      name: https
   selector:
     fixinventory: core
     {{- include "fixinventory.selectorLabels" . | nindent 4 }}
